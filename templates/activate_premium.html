@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activate Premium | QuestionClicks2Mpesa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --danger: #ff7675;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+        
+        .activation-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, var(--primary), #a29bfe);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .payment-steps { 
+            list-style-type: none; 
+            padding-left: 0; 
+        }
+        
+        .payment-steps li { 
+            margin-bottom: 10px; 
+            padding-left: 25px; 
+            position: relative; 
+        }
+        
+        .payment-steps li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+        }
+        
+        #paymentForm, #successMessage, #pendingMessage { 
+            display: none; 
+        }
+        
+        .till-number-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            background: rgba(108, 92, 231, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+        
+        .copy-btn {
+            padding: 5px 15px;
+            font-size: 0.8rem;
+            border-radius: 20px;
+        }
+        
+        .character-count {
+            font-size: 0.8rem;
+            text-align: right;
+            margin-top: 5px;
+        }
+        
+        .character-count.valid {
+            color: var(--success);
+        }
+        
+        .character-count.invalid {
+            color: var(--danger);
+        }
+        
+        .btn-activate {
+            background: linear-gradient(135deg, var(--primary), #a29bfe);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-activate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="activation-card">
+                    <!-- Header -->
+                    <div class="card-header">
+                        <h3><i class="fas fa-crown me-2"></i>Activate Premium Membership</h3>
+                        <p class="mb-0">One-time payment: Ksh 100</p>
+                    </div>
+                    
+                    <!-- Body -->
+                    <div class="card-body p-4">
+                        <!-- Step 1: Payment Instructions -->
+                        <div id="paymentInstructions">
+                            <h5 class="mb-4">Payment Instructions:</h5>
+                            <ol class="payment-steps">
+                                <li>Go to <strong>M-Pesa</strong> on your phone</li>
+                                <li>Select <strong>Lipa Na M-Pesa > Buy Goods and Services</strong></li>
+                                <li>
+                                    <div class="till-number-container">
+                                        <span>Enter Till Number: <strong><span class="text-primary" id="tillNumber">6957778</span></strong></span>
+                                        <button type="button" class="btn btn-outline-primary copy-btn" id="copyTillBtn">
+                                            <i class="fas fa-copy me-1"></i>Copy Till
+                                        </button>
+                                    </div>
+                                </li>
+                                <li>Enter Amount: <strong>Ksh 100</strong></li>
+                                <li>Enter your <strong>M-Pesa PIN</strong> and confirm</li>
+                            </ol>
+                            <button id="iHavePaidBtn" class="btn btn-activate text-white w-100 mt-4">
+                                <i class="fas fa-check-circle me-2"></i>I Have Paid
+                            </button>
+                        </div>
+
+                        <!-- Step 2: Transaction Verification Form -->
+                        <form id="paymentForm">
+                            <h5 class="mb-3">Verify Your Payment</h5>
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Paste M-Pesa Transaction Message</label>
+                                <textarea class="form-control" id="transactionMessage" rows="4" 
+                                          placeholder="Example: 
+'You have received Ksh100 from Felix Kamau (254712345678). 
+New M-PESA balance is Ksh5,200. Transaction: ABC123XYZ'
+                                          
+Paste the complete message you received from M-Pesa..." 
+                                          required></textarea>
+                                <div class="character-count" id="characterCount">
+                                    <span id="charCount">0</span>/200 characters
+                                </div>
+                                <div class="form-text">
+                                    <i class="fas fa-info-circle me-1"></i>
+                                    Copy and paste the complete M-Pesa message (usually 200-230 characters)
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-activate text-white w-100" id="submitBtn">
+                                <i class="fas fa-paper-plane me-2"></i>Submit for Verification
+                            </button>
+                        </form>
+
+                        <!-- Error Message -->
+                        <div id="errorAlert" class="alert alert-danger mt-3 d-none">
+                            <i class="fas fa-times-circle me-2"></i>
+                            <strong>Wrong Transaction!</strong> Please check and paste the correct M-Pesa message.
+                        </div>
+
+                        <!-- Pending Message -->
+                        <div id="pendingMessage" class="alert alert-warning mt-3 d-none">
+                            <i class="fas fa-clock me-2"></i>
+                            <strong>Activation Pending!</strong> You shall receive notification shortly.
+                        </div>
+
+                        <!-- Success Message -->
+                        <div id="successMessage" class="alert alert-success mt-3 d-none">
+                            <i class="fas fa-check-circle me-2"></i>
+                            <strong>Payment Verified!</strong> Your account is now active. Redirecting...
+                        </div>
+                        
+                        <!-- Back to Dashboard -->
+                        <div class="text-center mt-4">
+                            <a href="/auth/dashboard/" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Show payment form after clicking "I Have Paid"
+        document.getElementById("iHavePaidBtn").addEventListener("click", function() {
+            document.getElementById("paymentInstructions").style.display = "none";
+            document.getElementById("paymentForm").style.display = "block";
+        });
+
+        // Copy Till Number to Clipboard
+        document.getElementById("copyTillBtn").addEventListener("click", function() {
+            const tillNumber = document.getElementById("tillNumber").textContent;
+            
+            navigator.clipboard.writeText(tillNumber).then(() => {
+                // Change button text temporarily to show success
+                const originalText = this.innerHTML;
+                this.innerHTML = '<i class="fas fa-check me-1"></i>Copied!';
+                this.classList.remove("btn-outline-primary");
+                this.classList.add("btn-success");
+                
+                // Revert back after 2 seconds
+                setTimeout(() => {
+                    this.innerHTML = originalText;
+                    this.classList.remove("btn-success");
+                    this.classList.add("btn-outline-primary");
+                }, 2000);
+                
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                alert("Failed to copy till number. Please copy manually: " + tillNumber);
+            });
+        });
+
+        // Character count and validation
+        document.getElementById("transactionMessage").addEventListener("input", function() {
+            const charCount = this.value.length;
+            const countElement = document.getElementById("charCount");
+            const characterCount = document.getElementById("characterCount");
+            
+            countElement.textContent = charCount;
+            
+            // Update character count style
+            if (charCount >= 200 && charCount <= 230) {
+                characterCount.classList.add("valid");
+                characterCount.classList.remove("invalid");
+            } else {
+                characterCount.classList.add("invalid");
+                characterCount.classList.remove("valid");
+            }
+        });
+
+        // Handle form submission
+        document.getElementById("paymentForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            
+            const transactionMessage = document.getElementById("transactionMessage").value;
+            const charCount = transactionMessage.length;
+            const submitBtn = document.getElementById("submitBtn");
+            const originalText = submitBtn.innerHTML;
+            
+            // Show loading state
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Verifying...';
+            submitBtn.disabled = true;
+            
+            // Hide previous messages
+            document.getElementById("errorAlert").classList.add("d-none");
+            document.getElementById("pendingMessage").classList.add("d-none");
+            document.getElementById("successMessage").classList.add("d-none");
+            
+            // Simulate API call delay
+            setTimeout(() => {
+                // Validate message length (200-230 characters typical for M-Pesa messages)
+                if (charCount >= 200 && charCount <= 230) {
+                    // Valid M-Pesa message length - show pending message
+                    document.getElementById("pendingMessage").classList.remove("d-none");
+                    document.getElementById("paymentForm").style.display = "none";
+                    
+                    // In a real scenario, you would send this to your Django backend
+                    // For now, we'll simulate a successful activation after delay
+                    setTimeout(() => {
+                        // Send activation request to Django
+                        fetch('/auth/activate-premium/', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': getCookie('csrftoken')
+                            },
+                            body: JSON.stringify({ 
+                                action: 'activate_premium',
+                                transaction_message: transactionMessage 
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                document.getElementById("pendingMessage").classList.add("d-none");
+                                document.getElementById("successMessage").classList.remove("d-none");
+                                
+                                // Redirect to dashboard after 3 seconds
+                                setTimeout(() => {
+                                    window.location.href = "/auth/dashboard/";
+                                }, 3000);
+                            } else {
+                                // If backend verification fails
+                                document.getElementById("pendingMessage").classList.add("d-none");
+                                document.getElementById("errorAlert").classList.remove("d-none");
+                                submitBtn.innerHTML = originalText;
+                                submitBtn.disabled = false;
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            document.getElementById("pendingMessage").classList.add("d-none");
+                            document.getElementById("errorAlert").classList.remove("d-none");
+                            submitBtn.innerHTML = originalText;
+                            submitBtn.disabled = false;
+                        });
+                    }, 2000);
+                    
+                } else {
+                    // Invalid message length
+                    document.getElementById("errorAlert").classList.remove("d-none");
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                    
+                    // Add shake animation to error alert
+                    document.getElementById("errorAlert").classList.add("animate__animated", "animate__shakeX");
+                    setTimeout(() => {
+                        document.getElementById("errorAlert").classList.remove("animate__animated", "animate__shakeX");
+                    }, 1000);
+                }
+            }, 1500);
+        });
+
+        // Helper function to get CSRF token
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+    
+    <!-- Add animate.css for animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+</body>
+</html>

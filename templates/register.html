@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | Earnly - QuestionClicks2Mpesa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --dark: #2d3436;
+            --light: #f5f6fa;
+            --success: #00b894;
+            --danger: #ff7675;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+        
+        .auth-container {
+            max-width: 500px;
+            width: 100%;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .auth-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .auth-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .bonus-badge {
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            background: linear-gradient(45deg, #ff9a00, #ff6a00);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(255, 106, 0, 0.3);
+            animation: pulse 2s infinite;
+        }
+        
+        .auth-body {
+            padding: 30px;
+            background: white;
+        }
+        
+        .form-control {
+            height: 50px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            padding-left: 15px;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.25rem rgba(108, 92, 231, 0.25);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            border: none;
+            height: 50px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary:hover {
+            background-color: #5a4bc9;
+            transform: translateY(-2px);
+        }
+        
+        .login-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .login-link:hover {
+            text-decoration: underline;
+        }
+        
+        .input-group-text {
+            background-color: white;
+            border-right: none;
+        }
+        
+        .phone-input {
+            border-left: none;
+        }
+        
+        .bonus-highlight {
+            background-color: rgba(0, 184, 148, 0.1);
+            border-left: 4px solid var(--success);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .bonus-highlight i {
+            color: var(--success);
+            font-size: 24px;
+            margin-right: 15px;
+        }
+        
+        .bonus-highlight p {
+            margin: 0;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .bonus-highlight strong {
+            color: var(--success);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+        
+        .feature-list li {
+            padding: 8px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .feature-list li:before {
+            content: "✓";
+            color: var(--success);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .alert-danger {
+            background-color: rgba(255, 118, 117, 0.1);
+            border-color: rgba(255, 118, 117, 0.3);
+            color: var(--danger);
+            border-radius: 8px;
+        }
+
+        .alert-success {
+            background-color: rgba(0, 184, 148, 0.1);
+            border-color: rgba(0, 184, 148, 0.3);
+            color: var(--success);
+            border-radius: 8px;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-5px); }
+            40%, 80% { transform: translateX(5px); }
+        }
+        
+        .shake {
+            animation: shake 0.5s;
+        }
+
+        .pin-strength {
+            height: 4px;
+            border-radius: 2px;
+            margin-top: 5px;
+            transition: all 0.3s;
+        }
+
+        .strength-weak { background-color: #ff7675; width: 33%; }
+        .strength-medium { background-color: #fdcb6e; width: 66%; }
+        .strength-strong { background-color: #00b894; width: 100%; }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <div class="row justify-content-center animate__animated animate__fadeIn">
+            <div class="auth-container">
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <div class="bonus-badge">Get Free Ksh.500!</div>
+                        <h3><i class="fas fa-user-plus me-2"></i>Create Your Account</h3>
+                        <p class="mb-0">Start earning today with simple questions</p>
+                    </div>
+                    <div class="auth-body">
+                        <div id="registerError" class="alert alert-danger d-none">
+                            <i class="fas fa-exclamation-circle me-2"></i>
+                            <span id="errorMessage"></span>
+                        </div>
+
+                        <div id="registerSuccess" class="alert alert-success d-none">
+                            <i class="fas fa-check-circle me-2"></i>
+                            <span id="successMessage"></span>
+                        </div>
+                        
+                        <div class="bonus-highlight">
+                            <i class="fas fa-gift"></i>
+                            <p>Sign up today and get <strong>FREE Ksh.500</strong> instantly credited to your account!</p>
+                        </div>
+                        
+                        <form id="registerForm">
+                            {% csrf_token %}
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">Phone Number</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">+254</span>
+                                    <input type="tel" id="phoneNumber" class="form-control phone-input" placeholder="712345678" pattern="[0-9]{9}" required>
+                                </div>
+                                <small class="text-muted">We'll send a verification code to this number</small>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Create 4-Digit PIN</label>
+                                <input type="password" id="pin" class="form-control" maxlength="4" pattern="[0-9]{4}" inputmode="numeric" required>
+                                <div class="pin-strength" id="pinStrength"></div>
+                                <small class="text-muted">Do not share your PIN with anyone</small>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">Confirm 4-Digit PIN</label>
+                                <input type="password" id="confirmPin" class="form-control" maxlength="4" pattern="[0-9]{4}" inputmode="numeric" required>
+                                <small class="text-muted">Re-enter your PIN to confirm</small>
+                            </div>
+                            
+                            <div class="d-grid mb-3">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-gift me-2"></i>Sign Up & Claim Ksh.500
+                                </button>
+                            </div>
+                            
+                            <div class="text-center pt-3">
+                                <p class="mb-0">Already have an account? 
+                                    <a href="/auth/login/" class="login-link">Log In</a>
+                                </p>
+                            </div>
+                        </form>
+                        
+                        <div class="mt-4">
+                            <h6 class="fw-semibold">Why join Earnly?</h6>
+                            <ul class="feature-list">
+                                <li>Get Ksh.500 instantly upon signup</li>
+                                <li>Earn money by answering simple questions</li>
+                                <li>Withdraw directly to M-Pesa</li>
+                                <li>No hidden fees or charges</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <small class="text-muted">By registering, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a></small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("registerForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            
+            const phoneNumber = document.getElementById("phoneNumber").value;
+            const pin = document.getElementById("pin").value;
+            const confirmPin = document.getElementById("confirmPin").value;
+            const errorAlert = document.getElementById("registerError");
+            const successAlert = document.getElementById("registerSuccess");
+            const errorMessage = document.getElementById("errorMessage");
+            const successMessage = document.getElementById("successMessage");
+            const form = this;
+            
+            // Hide previous alerts
+            errorAlert.classList.add("d-none");
+            successAlert.classList.add("d-none");
+            
+            // Validate PIN match
+            if (pin !== confirmPin) {
+                errorMessage.textContent = "PINs do not match. Please enter the same PIN in both fields.";
+                errorAlert.classList.remove("d-none");
+                form.classList.add("shake");
+                setTimeout(() => form.classList.remove("shake"), 500);
+                return;
+            }
+            
+            // Validate PIN length
+            if (pin.length !== 4 || !/^\d+$/.test(pin)) {
+                errorMessage.textContent = "PIN must be exactly 4 digits.";
+                errorAlert.classList.remove("d-none");
+                form.classList.add("shake");
+                setTimeout(() => form.classList.remove("shake"), 500);
+                return;
+            }
+            
+            // Validate phone number
+            if (phoneNumber.length !== 9 || !/^\d+$/.test(phoneNumber)) {
+                errorMessage.textContent = "Please enter a valid 9-digit phone number (without +254).";
+                errorAlert.classList.remove("d-none");
+                form.classList.add("shake");
+                setTimeout(() => form.classList.remove("shake"), 500);
+                return;
+            }
+            
+            // Show loading state
+            const btn = form.querySelector('button[type="submit"]');
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Creating account...';
+            btn.disabled = true;
+            
+            // Prepare data for Django
+            const data = {
+                phoneNumber: phoneNumber,
+                pin: pin,
+                confirmPin: confirmPin
+            };
+            
+            // Send request to Django backend
+            fetch('/auth/register/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Registration successful
+                    successMessage.textContent = data.message + ' Redirecting to dashboard...';
+                    successAlert.classList.remove("d-none");
+                    
+                    // Redirect after delay
+                    setTimeout(() => {
+                        window.location.href = data.redirect_url;
+                    }, 2000);
+                } else {
+                    // Registration failed
+                    errorMessage.textContent = data.message;
+                    errorAlert.classList.remove("d-none");
+                    form.classList.add("shake");
+                    setTimeout(() => form.classList.remove("shake"), 500);
+                }
+            })
+            .catch(error => {
+                errorMessage.textContent = 'An error occurred. Please try again.';
+                errorAlert.classList.remove("d-none");
+                form.classList.add("shake");
+                setTimeout(() => form.classList.remove("shake"), 500);
+            })
+            .finally(() => {
+                // Reset button state
+                btn.innerHTML = '<i class="fas fa-gift me-2"></i>Sign Up & Claim Ksh.500';
+                btn.disabled = false;
+            });
+        });
+        
+        // PIN strength indicator
+        document.getElementById("pin").addEventListener("input", function() {
+            const pin = this.value;
+            const strengthBar = document.getElementById("pinStrength");
+            
+            if (pin.length === 0) {
+                strengthBar.className = 'pin-strength';
+                strengthBar.style.width = '0';
+            } else if (pin.length <= 2) {
+                strengthBar.className = 'pin-strength strength-weak';
+            } else if (pin.length === 3) {
+                strengthBar.className = 'pin-strength strength-medium';
+            } else if (pin.length === 4) {
+                strengthBar.className = 'pin-strength strength-strong';
+            }
+        });
+        
+        // Clear errors when user starts typing
+        document.getElementById("phoneNumber").addEventListener("input", function() {
+            document.getElementById("registerError").classList.add("d-none");
+        });
+        
+        document.getElementById("pin").addEventListener("input", function() {
+            document.getElementById("registerError").classList.add("d-none");
+        });
+        
+        document.getElementById("confirmPin").addEventListener("input", function() {
+            document.getElementById("registerError").classList.add("d-none");
+        });
+        
+        // Real-time PIN match validation
+        document.getElementById("confirmPin").addEventListener("input", function() {
+            const pin = document.getElementById("pin").value;
+            const confirmPin = this.value;
+            const errorAlert = document.getElementById("registerError");
+            
+            if (confirmPin.length === 4 && pin !== confirmPin) {
+                errorMessage.textContent = "PINs do not match.";
+                errorAlert.classList.remove("d-none");
+            } else if (pin === confirmPin && confirmPin.length === 4) {
+                errorAlert.classList.add("d-none");
+            }
+        });
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

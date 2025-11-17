@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Earnly - QuestionClicks2Mpesa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --danger: #ff7675;
+            --dark: #2d3436;
+            --light: #f5f6fa;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+        
+        .auth-container {
+            max-width: 500px;
+            width: 100%;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .auth-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .auth-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .auth-body {
+            padding: 30px;
+            background: white;
+        }
+        
+        .form-control {
+            height: 50px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            padding-left: 15px;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.25rem rgba(108, 92, 231, 0.25);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            border: none;
+            height: 50px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary:hover {
+            background-color: #5a4bc9;
+            transform: translateY(-2px);
+        }
+        
+        .register-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .register-link:hover {
+            text-decoration: underline;
+        }
+        
+        .alert-danger {
+            background-color: rgba(255, 118, 117, 0.1);
+            border-color: rgba(255, 118, 117, 0.3);
+            color: var(--danger);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-5px); }
+            40%, 80% { transform: translateX(5px); }
+        }
+        
+        .shake {
+            animation: shake 0.5s;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <div class="row justify-content-center animate__animated animate__fadeIn">
+            <div class="auth-container">
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <h3><i class="fas fa-sign-in-alt me-2"></i>Welcome Back!</h3>
+                        <p class="mb-0">Access your earnings dashboard</p>
+                    </div>
+                    <div class="auth-body">
+                        <div id="loginError" class="alert alert-danger d-none">
+                            <i class="fas fa-exclamation-circle me-2"></i>
+                            <span id="errorMessage">Invalid phone number or PIN. Please try again.</span>
+                        </div>
+                        
+                        <form id="loginForm">
+                            {% csrf_token %}
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">Phone Number</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">+254</span>
+                                    <input type="tel" id="phoneNumber" class="form-control phone-input" placeholder="712345678" pattern="[0-9]{9}" required>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">4-Digit PIN</label>
+                                <input type="password" id="pin" class="form-control" maxlength="4" pattern="[0-9]{4}" inputmode="numeric" required>
+                                <small class="text-muted">
+                                    <a href="#" class="text-decoration-none">Forgot PIN?</a>
+                                </small>
+                            </div>
+                            
+                            <div class="d-grid mb-3">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-sign-in-alt me-2"></i>Log In
+                                </button>
+                            </div>
+                            
+                            <div class="text-center pt-3">
+                                <p class="mb-0">Don't have an account? 
+                                    <a href="/auth/register/" class="register-link">Register</a>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <small class="text-muted">Secure login with end-to-end encryption</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            
+            const phoneNumber = document.getElementById("phoneNumber").value;
+            const pin = document.getElementById("pin").value;
+            const errorAlert = document.getElementById("loginError");
+            const errorMessage = document.getElementById("errorMessage");
+            const form = this;
+            
+            // Show loading state
+            const btn = form.querySelector('button[type="submit"]');
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Logging in...';
+            btn.disabled = true;
+            
+            // Prepare data for Django
+            const data = {
+                phoneNumber: phoneNumber,
+                pin: pin
+            };
+            
+            // Send request to Django backend
+            fetch('/auth/login/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Login successful
+                    errorAlert.classList.add("d-none");
+                    window.location.href = data.redirect_url;
+                } else {
+                    // Login failed
+                    errorMessage.textContent = data.message;
+                    errorAlert.classList.remove("d-none");
+                    form.classList.add("shake");
+                    
+                    // Remove shake animation after it completes
+                    setTimeout(() => {
+                        form.classList.remove("shake");
+                    }, 500);
+                    
+                    // Focus on PIN field
+                    document.getElementById("pin").focus();
+                }
+            })
+            .catch(error => {
+                errorMessage.textContent = 'An error occurred. Please try again.';
+                errorAlert.classList.remove("d-none");
+            })
+            .finally(() => {
+                // Reset button state
+                btn.innerHTML = '<i class="fas fa-sign-in-alt me-2"></i>Log In';
+                btn.disabled = false;
+            });
+        });
+        
+        // Clear error when user starts typing
+        document.getElementById("phoneNumber").addEventListener("input", function() {
+            document.getElementById("loginError").classList.add("d-none");
+        });
+        
+        document.getElementById("pin").addEventListener("input", function() {
+            document.getElementById("loginError").classList.add("d-none");
+        });
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

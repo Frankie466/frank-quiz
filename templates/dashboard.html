@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - QuestionClicks2Mpesa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --success: #00b894;
+            --danger: #ff7675;
+            --warning: #fdcb6e;
+            --info: #0984e3;
+            --dark: #2d3436;
+            --light: #f5f6fa;
+            --premium: #e84393;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            line-height: 1.6;
+        }
+        
+        .premium-badge {
+            background: linear-gradient(135deg, var(--premium), #fd79a8);
+            color: white;
+            font-size: 0.7rem;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        .account-alert {
+            border-radius: 0;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            background: linear-gradient(135deg, var(--danger), #e84393);
+            color: white;
+            border: none;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .account-alert.success {
+            background: linear-gradient(135deg, var(--success), #00cec9);
+        }
+        
+        .account-alert:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .account-alert:hover:before {
+            left: 100%;
+        }
+        
+        .payment-instructions {
+            display: none;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            padding: 30px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .activation-card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            background: white;
+            transition: all 0.3s;
+        }
+        
+        .activation-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+        
+        .activation-header {
+            background: linear-gradient(135deg, var(--warning), #ffeaa7);
+            color: var(--dark);
+            padding: 20px;
+            font-weight: 600;
+            position: relative;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, var(--info), #74b9ff);
+            color: white;
+            font-weight: 600;
+            border-radius: 12px 12px 0 0 !important;
+        }
+        
+        .survey-card .card-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+        
+        .earnings-card .card-header {
+            background: linear-gradient(135deg, var(--success), #00cec9);
+        }
+        
+        .disabled-feature {
+            opacity: 0.6;
+            position: relative;
+        }
+        
+        .activate-bottom-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(108, 92, 231, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(108, 92, 231, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(108, 92, 231, 0); }
+        }
+        
+        .stats-card {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .stats-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .btn-activate {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s;
+        }
+        
+        .btn-activate:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(108, 92, 231, 0.3);
+        }
+        
+        .btn-withdraw {
+            background: linear-gradient(135deg, var(--success), #00cec9);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s;
+        }
+        
+        .btn-withdraw:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 184, 148, 0.3);
+        }
+        
+        .navbar {
+            background: linear-gradient(135deg, var(--dark), #636e72);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 40px 0;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 30px;
+        }
+        
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+        
+        .phone-input-group {
+            position: relative;
+        }
+        
+        .phone-prefix {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+            font-weight: 500;
+            z-index: 3;
+        }
+        
+        .phone-input {
+            padding-left: 45px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Account Status Alert -->
+    {% if not user.is_premium %}
+    <div class="alert account-alert mb-0 text-center animate__animated animate__fadeIn" id="inactiveAlert">
+        <i class="fas fa-exclamation-circle me-2"></i>
+        <strong>PREMIUM ACCOUNT INACTIVE</strong> - CLICK TO UNLOCK SURVEYS & WITHDRAW Ksh 500 BONUS
+    </div>
+    {% else %}
+    <div class="alert account-alert success mb-0 text-center animate__animated animate__fadeIn">
+        <i class="fas fa-check-circle me-2"></i>
+        <strong>PREMIUM ACCOUNT ACTIVE</strong> - YOU CAN NOW ACCESS SURVEYS AND WITHDRAW EARNINGS
+    </div>
+    {% endif %}
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="display-5 fw-bold mb-3">Welcome, {{ user.display_name }}! 👋</h1>
+                    <p class="lead mb-0">Ready to start earning? Complete surveys and get paid directly to your M-Pesa.</p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <div class="stats-card d-inline-block m-2">
+                        <div class="stats-number">Ksh {{ user.balance }}</div>
+                        <div class="stats-label">Available Balance</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Instructions (Hidden Initially) -->
+    {% if not user.is_premium %}
+    <div class="payment-instructions" id="paymentInstructions">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="activation-card">
+                        <div class="activation-header text-center">
+                            <i class="fas fa-lock-open me-2"></i> ACTIVATE PREMIUM ACCOUNT - Ksh 100
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="text-center mb-4">
+                                <div class="mpesa-phone" style="font-size: 3rem; color: var(--success);">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </div>
+                                <h4 class="mb-3">M-Pesa Payment Instructions</h4>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <div class="instruction-step">
+                                    <i class="fas fa-arrow-right text-primary me-2"></i>
+                                    Go to <strong>M-Pesa</strong> on your phone
+                                </div>
+                                <div class="instruction-step">
+                                    <i class="fas fa-arrow-right text-primary me-2"></i>
+                                    Select <strong>Lipa Na M-Pesa > Buy Goods and Services</strong>
+                                </div>
+                                <div class="instruction-step">
+                                    <i class="fas fa-arrow-right text-primary me-2"></i>
+                                    Enter Till Number: <strong>6957778</strong>
+                                    <button class="btn btn-sm btn-outline-primary ms-2" onclick="copyToClipboard('6957778')">
+                                        <i class="far fa-copy me-1"></i> Copy
+                                    </button>
+                                </div>
+                                <div class="instruction-step">
+                                    <i class="fas fa-arrow-right text-primary me-2"></i>
+                                    Enter Amount: <strong>Ksh 100</strong>
+                                </div>
+                                <div class="instruction-step">
+                                    <i class="fas fa-arrow-right text-primary me-2"></i>
+                                    Enter your <strong>M-Pesa PIN</strong> and confirm
+                                </div>
+                            </div>
+                            
+                            <div class="text-center">
+                                <a href="/auth/activate-premium/" class="btn btn-activate btn-lg text-white">
+                                    <i class="fas fa-arrow-right me-2"></i> Go to Activation Page
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-coins me-2"></i> QuestionClicks2Mpesa 
+                {% if user.is_premium %}<span class="premium-badge">PREMIUM</span>{% endif %}
+            </a>
+            <div class="navbar-nav ms-auto">
+                <span class="navbar-text me-3">
+                    <i class="fas fa-user me-1"></i> {{ user.phone_number }}
+                </span>
+                <a href="/auth/logout/" class="btn btn-outline-light btn-sm">
+                    <i class="fas fa-sign-out-alt me-1"></i> Logout
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-4">
+        <div class="row">
+            <!-- Left Column - Earnings & Stats -->
+            <div class="col-md-4">
+                <!-- Earnings Card -->
+                <div class="card earnings-card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-wallet me-2"></i> Your Earnings</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <h2 class="text-success mb-3">Ksh {{ user.balance }}</h2>
+                        
+                        {% if user.is_premium %}
+                            <button class="btn btn-withdraw text-white w-100 mb-3" id="withdrawBtn" data-bs-toggle="modal" data-bs-target="#withdrawModal">
+                                <i class="fas fa-money-bill-wave me-2"></i> Withdraw via M-Pesa
+                            </button>
+                            <p class="text-muted small">
+                                <i class="fas fa-check-circle me-1 text-success"></i> Ready to withdraw
+                            </p>
+                        {% else %}
+                            <button class="btn btn-secondary w-100 mb-3" id="inactiveWithdrawBtn">
+                                <i class="fas fa-lock me-2"></i> Activate to Withdraw
+                            </button>
+                            <p class="text-muted small">
+                                <i class="fas fa-info-circle me-1"></i> Activate premium to withdraw Ksh 500 bonus
+                            </p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- User Stats -->
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-chart-bar me-2"></i> Your Stats</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row text-center">
+                            <div class="col-6 mb-3">
+                                <div class="stats-number">{{ completed_surveys }}</div>
+                                <div class="stats-label">Surveys Done</div>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <div class="stats-number">Ksh {{ total_earnings }}</div>
+                                <div class="stats-label">Total Earned</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Premium Benefits -->
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-crown me-2"></i> Premium Benefits</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex align-items-center">
+                                <i class="fas fa-check text-success me-2"></i>
+                                <span>Access to all surveys</span>
+                            </li>
+                            <li class="list-group-item d-flex align-items-center">
+                                <i class="fas fa-check text-success me-2"></i>
+                                <span>Withdraw Ksh 500 bonus</span>
+                            </li>
+                            <li class="list-group-item d-flex align-items-center">
+                                <i class="fas fa-check text-success me-2"></i>
+                                <span>Higher-paying surveys</span>
+                            </li>
+                            <li class="list-group-item d-flex align-items-center">
+                                <i class="fas fa-check text-success me-2"></i>
+                                <span>Instant M-Pesa withdrawals</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - Surveys -->
+            <div class="col-md-8">
+                <div class="card survey-card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0"><i class="fas fa-clipboard-list me-2"></i> Available Surveys</h5>
+                        {% if not user.is_premium %}
+                        <span class="badge bg-warning">PREMIUM REQUIRED</span>
+                        {% endif %}
+                    </div>
+                    <div class="card-body">
+                        {% if user.is_premium %}
+                            {% if available_surveys %}
+                                <div class="list-group">
+                                    {% for survey in available_surveys %}
+                                    <a href="#" class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h6 class="mb-1">{{ survey.title }}</h6>
+                                            <span class="badge bg-success">Ksh {{ survey.reward_amount }}</span>
+                                        </div>
+                                        <p class="mb-1">{{ survey.description }}</p>
+                                        <small class="text-muted">{{ survey.estimated_time }} mins • {{ survey.questions_count }} questions</small>
+                                    </a>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <div class="text-center py-4">
+                                    <i class="fas fa-clipboard-check fa-3x text-muted mb-3"></i>
+                                    <p class="text-muted">No surveys available at the moment. Check back later!</p>
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            <div class="alert alert-warning">
+                                <i class="fas fa-lock me-2"></i> Activate your premium account to access surveys and start earning
+                            </div>
+                            <div class="list-group">
+                                <div class="list-group-item disabled opacity-50">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1">Mobile Banking Survey</h6>
+                                        <span class="badge bg-success">Ksh 200</span>
+                                    </div>
+                                    <p class="mb-1">Share your mobile banking experience</p>
+                                    <small class="text-muted">12 mins • 15 questions</small>
+                                </div>
+                                <div class="list-group-item disabled opacity-50">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1">Consumer Products Study</h6>
+                                        <span class="badge bg-success">Ksh 150</span>
+                                    </div>
+                                    <p class="mb-1">Review popular consumer products</p>
+                                    <small class="text-muted">8 mins • 10 questions</small>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-history me-2"></i> Recent Activity</h5>
+                    </div>
+                    <div class="card-body">
+                        {% if user.is_premium and completed_surveys > 0 %}
+                            <p class="text-muted">Your survey completion history will appear here.</p>
+                        {% else %}
+                            <p class="text-muted">Complete your first survey to see activity here.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Withdraw Modal -->
+    <div class="modal fade" id="withdrawModal" tabindex="-1" aria-labelledby="withdrawModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="withdrawModalLabel">
+                        <i class="fas fa-money-bill-wave me-2"></i>Withdraw Funds
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="withdrawForm">
+                        <div class="mb-3">
+                            <label for="phoneNumber" class="form-label">M-Pesa Phone Number</label>
+                            <div class="phone-input-group">
+                                <span class="phone-prefix">+254</span>
+                                <input type="tel" class="form-control phone-input" id="phoneNumber" 
+                                       placeholder="712345678" pattern="[0-9]{9}" required>
+                            </div>
+                            <div class="form-text">Enter your M-Pesa registered phone number without +254</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="withdrawAmount" class="form-label">Amount to Withdraw</label>
+                            <div class="input-group">
+                                <span class="input-group-text">Ksh</span>
+                                <input type="number" class="form-control" id="withdrawAmount" 
+                                       value="{{ user.balance }}" min="50" max="{{ user.balance }}" step="10" required>
+                            </div>
+                            <div class="form-text">Minimum withdrawal: Ksh 50</div>
+                        </div>
+                        
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            Funds will be sent to your M-Pesa within 24 hours
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-withdraw text-white" id="confirmWithdrawBtn">
+                        <i class="fas fa-paper-plane me-2"></i>Withdraw Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Activate Button (Only show if not premium) -->
+    {% if not user.is_premium %}
+    <div class="activate-bottom-btn">
+        <a href="/auth/activate-premium/" class="btn btn-activate btn-lg text-white shadow-lg">
+            <i class="fas fa-bolt me-2"></i> ACTIVATE PREMIUM
+        </a>
+    </div>
+    {% endif %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Toggle payment instructions
+        function togglePaymentInstructions() {
+            const instructions = document.getElementById('paymentInstructions');
+            if (instructions) {
+                instructions.style.display = instructions.style.display === 'block' ? 'none' : 'block';
+                if (instructions.style.display === 'block') {
+                    instructions.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        }
+
+        // Set up click handlers for non-premium users
+        {% if not user.is_premium %}
+        document.getElementById('inactiveAlert').addEventListener('click', function() {
+            window.location.href = '/auth/activate-premium/';
+        });
+        
+        document.getElementById('inactiveWithdrawBtn').addEventListener('click', function() {
+            alert('Account inactive. Please activate your premium account to withdraw funds.');
+            window.location.href = '/auth/activate-premium/';
+        });
+        {% else %}
+        // For premium users - handle withdraw functionality
+        document.getElementById('confirmWithdrawBtn').addEventListener('click', function() {
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const amount = document.getElementById('withdrawAmount').value;
+            const btn = this;
+            const originalText = btn.innerHTML;
+            
+            // Validate phone number
+            if (!phoneNumber || phoneNumber.length !== 9 || !/^\d+$/.test(phoneNumber)) {
+                alert('Please enter a valid 9-digit phone number (without +254)');
+                return;
+            }
+            
+            // Validate amount
+            if (!amount || amount < 50 || amount > {{ user.balance }}) {
+                alert('Please enter a valid amount between Ksh 50 and Ksh {{ user.balance }}');
+                return;
+            }
+            
+            // Show loading state
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Processing...';
+            btn.disabled = true;
+            
+            // Simulate API call
+            setTimeout(() => {
+                // Close modal
+                const modal = bootstrap.Modal.getInstance(document.getElementById('withdrawModal'));
+                modal.hide();
+                
+                // Show success message
+                alert(`Withdrawal request for Ksh ${amount} to +254${phoneNumber} submitted successfully! Funds will be processed within 24 hours.`);
+                
+                // Reset form
+                document.getElementById('withdrawForm').reset();
+                document.getElementById('withdrawAmount').value = {{ user.balance }};
+                
+                // Reset button
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }, 2000);
+        });
+
+        // Set max amount when modal opens
+        document.getElementById('withdrawModal').addEventListener('show.bs.modal', function() {
+            document.getElementById('withdrawAmount').max = {{ user.balance }};
+            document.getElementById('withdrawAmount').value = {{ user.balance }};
+        });
+        {% endif %}
+
+        // Copy to clipboard function
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text);
+            alert('Till number copied to clipboard: ' + text);
+        }
+
+        // Redirect to activate premium when clicking activate buttons
+        document.addEventListener('DOMContentLoaded', function() {
+            const activateButtons = document.querySelectorAll('.btn-activate');
+            activateButtons.forEach(button => {
+                if (button.tagName === 'BUTTON') {
+                    button.addEventListener('click', function() {
+                        window.location.href = '/auth/activate-premium/';
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
