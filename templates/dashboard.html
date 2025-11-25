@@ -7,52 +7,80 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #6c5ce7;
-            --secondary: #a29bfe;
+            --primary-dark: #5649c0;
+            --primary-light: #a29bfe;
+            --secondary: #00b894;
+            --secondary-dark: #00a085;
+            --accent: #fd79a8;
+            --accent-light: #ff9ebe;
             --success: #00b894;
             --danger: #ff7675;
             --warning: #fdcb6e;
             --info: #0984e3;
             --dark: #2d3436;
+            --dark-light: #636e72;
             --light: #f5f6fa;
-            --premium: #e84393;
+            --gradient: linear-gradient(135deg, var(--primary), var(--primary-light));
+            --gradient-dark: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            --premium-gradient: linear-gradient(135deg, var(--accent), #fd79a8);
+            --success-gradient: linear-gradient(135deg, var(--success), #55efc4);
+            --danger-gradient: linear-gradient(135deg, var(--danger), #e84393);
+            --shadow: 0 10px 30px rgba(0,0,0,0.08);
+            --shadow-hover: 0 15px 40px rgba(0,0,0,0.12);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background-color: #f8f9fa;
             line-height: 1.6;
+            color: var(--dark);
         }
         
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        
+        /* Premium Badge */
         .premium-badge {
-            background: linear-gradient(135deg, var(--premium), #fd79a8);
+            background: var(--premium-gradient);
             color: white;
             font-size: 0.7rem;
-            padding: 3px 10px;
+            padding: 4px 12px;
             border-radius: 20px;
             font-weight: 600;
             letter-spacing: 0.5px;
+            box-shadow: 0 3px 10px rgba(232, 67, 147, 0.3);
         }
         
+        /* Account Status Alert */
         .account-alert {
             border-radius: 0;
             cursor: pointer;
             transition: all 0.3s;
             font-weight: 600;
             letter-spacing: 0.5px;
-            background: linear-gradient(135deg, var(--danger), #e84393);
+            background: var(--danger-gradient);
             color: white;
             border: none;
-            padding: 15px 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 18px 0;
+            box-shadow: var(--shadow);
             position: relative;
             overflow: hidden;
         }
         
         .account-alert.success {
-            background: linear-gradient(135deg, var(--success), #00cec9);
+            background: var(--success-gradient);
         }
         
         .account-alert:before {
@@ -70,62 +98,74 @@
             left: 100%;
         }
         
+        .account-alert:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        /* Payment Instructions */
         .payment-instructions {
             display: none;
             background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
-            padding: 30px 0;
+            padding: 40px 0;
             border-bottom: 1px solid rgba(0,0,0,0.05);
         }
         
         .activation-card {
             border: none;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
             overflow: hidden;
             background: white;
             transition: all 0.3s;
         }
         
         .activation-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
         }
         
         .activation-header {
-            background: linear-gradient(135deg, var(--warning), #ffeaa7);
-            color: var(--dark);
-            padding: 20px;
-            font-weight: 600;
+            background: var(--gradient);
+            color: white;
+            padding: 25px;
+            font-weight: 700;
             position: relative;
+            font-size: 1.2rem;
+            text-align: center;
         }
         
+        /* Cards */
         .card {
             border: none;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
             transition: all 0.3s;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             overflow: hidden;
+            background: white;
         }
         
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
         }
         
         .card-header {
-            background: linear-gradient(135deg, var(--info), #74b9ff);
+            background: var(--gradient);
             color: white;
             font-weight: 600;
-            border-radius: 12px 12px 0 0 !important;
+            border-radius: 16px 16px 0 0 !important;
+            padding: 20px 25px;
+            font-size: 1.1rem;
         }
         
         .survey-card .card-header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: var(--gradient-dark);
         }
         
         .earnings-card .card-header {
-            background: linear-gradient(135deg, var(--success), #00cec9);
+            background: var(--success-gradient);
         }
         
         .disabled-feature {
@@ -133,105 +173,315 @@
             position: relative;
         }
         
+        /* Floating Activate Button */
         .activate-bottom-btn {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 25px;
+            right: 25px;
             z-index: 1000;
             animation: pulse 2s infinite;
         }
         
         @keyframes pulse {
             0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(108, 92, 231, 0.7); }
-            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(108, 92, 231, 0); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(108, 92, 231, 0); }
             100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(108, 92, 231, 0); }
         }
         
+        /* Stats Cards */
         .stats-card {
             text-align: center;
-            padding: 20px;
-            border-radius: 10px;
+            padding: 25px 20px;
+            border-radius: 16px;
             background: white;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            box-shadow: var(--shadow);
             transition: all 0.3s;
+            border: 1px solid rgba(0,0,0,0.03);
         }
         
         .stats-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
         }
         
         .stats-number {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 5px;
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+            line-height: 1;
         }
         
+        .stats-label {
+            font-size: 0.95rem;
+            color: var(--dark-light);
+            font-weight: 500;
+        }
+        
+        /* Buttons */
         .btn-activate {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: var(--gradient);
             border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            font-weight: 600;
+            padding: 14px 30px;
+            border-radius: 12px;
+            font-weight: 700;
             letter-spacing: 0.5px;
             transition: all 0.3s;
+            color: white;
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
         }
         
         .btn-activate:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(108, 92, 231, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(108, 92, 231, 0.4);
+            color: white;
         }
         
         .btn-withdraw {
-            background: linear-gradient(135deg, var(--success), #00cec9);
+            background: var(--success-gradient);
             border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            font-weight: 600;
+            padding: 14px 30px;
+            border-radius: 12px;
+            font-weight: 700;
             letter-spacing: 0.5px;
             transition: all 0.3s;
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 184, 148, 0.3);
         }
         
         .btn-withdraw:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 184, 148, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 184, 148, 0.4);
+            color: white;
         }
         
+        /* Navbar */
         .navbar {
-            background: linear-gradient(135deg, var(--dark), #636e72);
-            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            background: var(--gradient-dark);
+            box-shadow: var(--shadow);
+            padding: 15px 0;
         }
         
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.4rem;
+            color: white;
+            display: flex;
+            align-items: center;
+        }
+        
+        .navbar-text {
+            color: rgba(255,255,255,0.9) !important;
+            font-weight: 500;
+        }
+        
+        .btn-outline-light {
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-outline-light:hover {
+            background: white;
+            color: var(--primary);
+            border-color: white;
+        }
+        
+        /* Hero Section */
         .hero-section {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: var(--gradient);
             color: white;
-            padding: 40px 0;
-            border-radius: 0 0 20px 20px;
-            margin-bottom: 30px;
+            padding: 50px 0 40px;
+            border-radius: 0 0 25px 25px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
         }
         
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjA1KSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3QgZmlsbD0idXJsKCNwYXR0ZXJuKSIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIvPjwvc3ZnPg==');
+            opacity: 0.2;
+        }
+        
+        .hero-title {
+            font-weight: 800;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+        
+        /* Modal */
         .modal-header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: var(--gradient);
             color: white;
+            border-radius: 16px 16px 0 0;
+            padding: 20px 25px;
         }
         
+        .modal-title {
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+        
+        .btn-close-white {
+            filter: invert(1);
+        }
+        
+        /* Form Elements */
         .phone-input-group {
             position: relative;
         }
         
         .phone-prefix {
             position: absolute;
-            left: 12px;
+            left: 15px;
             top: 50%;
             transform: translateY(-50%);
-            color: #6c757d;
-            font-weight: 500;
+            color: var(--dark-light);
+            font-weight: 600;
             z-index: 3;
         }
         
         .phone-input {
-            padding-left: 45px;
+            padding-left: 55px;
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+            height: 50px;
+            font-weight: 500;
+        }
+        
+        .phone-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.2rem rgba(108, 92, 231, 0.25);
+        }
+        
+        /* List Groups */
+        .list-group-item {
+            border: 1px solid rgba(0,0,0,0.05);
+            border-radius: 12px !important;
+            margin-bottom: 10px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+        
+        .list-group-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .list-group-item-action:hover {
+            background-color: #f8f9fa;
+        }
+        
+        /* Badges */
+        .badge {
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+        }
+        
+        /* Alerts */
+        .alert {
+            border-radius: 12px;
+            border: none;
+            padding: 20px;
+            font-weight: 500;
+        }
+        
+        .alert-warning {
+            background: rgba(253, 203, 110, 0.15);
+            color: #856404;
+            border-left: 4px solid var(--warning);
+        }
+        
+        .alert-info {
+            background: rgba(9, 132, 227, 0.1);
+            color: #0c5460;
+            border-left: 4px solid var(--info);
+        }
+        
+        /* Instruction Steps */
+        .instruction-step {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+        
+        .instruction-step:last-child {
+            border-bottom: none;
+        }
+        
+        /* M-Pesa Icon */
+        .mpesa-phone {
+            font-size: 3.5rem;
+            color: var(--success);
+            margin-bottom: 20px;
+        }
+        
+        /* Premium Benefits */
+        .list-group-item {
+            border: none;
+            padding: 15px 0;
+        }
+        
+        .list-group-item:not(:last-child) {
+            border-bottom: 1px solid rgba(0,0,0,0.05) !important;
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .stats-number {
+                font-size: 2rem;
+            }
+            
+            .activate-bottom-btn {
+                bottom: 15px;
+                right: 15px;
+            }
+            
+            .activate-bottom-btn .btn {
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero-section {
+                padding: 40px 0 30px;
+            }
+            
+            .card-header {
+                padding: 15px 20px;
+            }
+            
+            .stats-card {
+                padding: 20px 15px;
+            }
         }
     </style>
 </head>
@@ -251,14 +501,14 @@
 
     <!-- Hero Section -->
     <div class="hero-section">
-        <div class="container">
+        <div class="container position-relative">
             <div class="row align-items-center">
                 <div class="col-md-8">
-                    <h1 class="display-5 fw-bold mb-3">Welcome, {{ user.display_name }}! 👋</h1>
-                    <p class="lead mb-0">Ready to start earning? Complete surveys and get paid directly to your M-Pesa.</p>
+                    <h1 class="hero-title">Welcome, {{ user.display_name }}! 👋</h1>
+                    <p class="hero-subtitle">Ready to start earning? Complete surveys and get paid directly to your M-Pesa.</p>
                 </div>
-                <div class="col-md-4 text-end">
-                    <div class="stats-card d-inline-block m-2">
+                <div class="col-md-4 text-md-end">
+                    <div class="stats-card d-inline-block m-2 animate__animated animate__fadeInRight">
                         <div class="stats-number">Ksh {{ user.balance }}</div>
                         <div class="stats-label">Available Balance</div>
                     </div>
@@ -273,13 +523,13 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8">
-                    <div class="activation-card">
+                    <div class="activation-card animate__animated animate__fadeInUp">
                         <div class="activation-header text-center">
                             <i class="fas fa-lock-open me-2"></i> ACTIVATE PREMIUM ACCOUNT - Ksh 100
                         </div>
                         <div class="card-body p-4">
                             <div class="text-center mb-4">
-                                <div class="mpesa-phone" style="font-size: 3rem; color: var(--success);">
+                                <div class="mpesa-phone">
                                     <i class="fas fa-mobile-alt"></i>
                                 </div>
                                 <h4 class="mb-3">M-Pesa Payment Instructions</h4>
@@ -312,9 +562,9 @@
                             </div>
                             
                             <div class="text-center">
-                                <a href="/auth/activate-premium/" class="btn btn-activate btn-lg text-white">
+                                <button class="btn btn-activate btn-lg">
                                     <i class="fas fa-arrow-right me-2"></i> Go to Activation Page
-                                </a>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -328,7 +578,7 @@
         <div class="container">
             <a class="navbar-brand" href="/">
                 <i class="fas fa-coins me-2"></i> QuestionClicks2Mpesa 
-                {% if user.is_premium %}<span class="premium-badge">PREMIUM</span>{% endif %}
+                {% if user.is_premium %}<span class="premium-badge ms-2">PREMIUM</span>{% endif %}
             </a>
             <div class="navbar-nav ms-auto">
                 <span class="navbar-text me-3">
@@ -346,15 +596,15 @@
             <!-- Left Column - Earnings & Stats -->
             <div class="col-md-4">
                 <!-- Earnings Card -->
-                <div class="card earnings-card">
+                <div class="card earnings-card animate__animated animate__fadeInLeft">
                     <div class="card-header">
                         <h5 class="mb-0"><i class="fas fa-wallet me-2"></i> Your Earnings</h5>
                     </div>
                     <div class="card-body text-center">
-                        <h2 class="text-success mb-3">Ksh {{ user.balance }}</h2>
+                        <h2 class="text-success mb-3" style="font-weight: 800;">Ksh {{ user.balance }}</h2>
                         
                         {% if user.is_premium %}
-                            <button class="btn btn-withdraw text-white w-100 mb-3" id="withdrawBtn" data-bs-toggle="modal" data-bs-target="#withdrawModal">
+                            <button class="btn btn-withdraw w-100 mb-3" id="withdrawBtn" data-bs-toggle="modal" data-bs-target="#withdrawModal">
                                 <i class="fas fa-money-bill-wave me-2"></i> Withdraw via M-Pesa
                             </button>
                             <p class="text-muted small">
@@ -372,7 +622,7 @@
                 </div>
 
                 <!-- User Stats -->
-                <div class="card mt-4">
+                <div class="card mt-4 animate__animated animate__fadeInLeft animate__delay-1s">
                     <div class="card-header">
                         <h5 class="mb-0"><i class="fas fa-chart-bar me-2"></i> Your Stats</h5>
                     </div>
@@ -391,7 +641,7 @@
                 </div>
 
                 <!-- Premium Benefits -->
-                <div class="card mt-4">
+                <div class="card mt-4 animate__animated animate__fadeInLeft animate__delay-2s">
                     <div class="card-header">
                         <h5 class="mb-0"><i class="fas fa-crown me-2"></i> Premium Benefits</h5>
                     </div>
@@ -420,7 +670,7 @@
 
             <!-- Right Column - Surveys -->
             <div class="col-md-8">
-                <div class="card survey-card">
+                <div class="card survey-card animate__animated animate__fadeInRight">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h5 class="mb-0"><i class="fas fa-clipboard-list me-2"></i> Available Surveys</h5>
                         {% if not user.is_premium %}
@@ -475,7 +725,7 @@
                 </div>
 
                 <!-- Recent Activity -->
-                <div class="card mt-4">
+                <div class="card mt-4 animate__animated animate__fadeInRight animate__delay-1s">
                     <div class="card-header">
                         <h5 class="mb-0"><i class="fas fa-history me-2"></i> Recent Activity</h5>
                     </div>
@@ -483,7 +733,10 @@
                         {% if user.is_premium and completed_surveys > 0 %}
                             <p class="text-muted">Your survey completion history will appear here.</p>
                         {% else %}
-                            <p class="text-muted">Complete your first survey to see activity here.</p>
+                            <div class="text-center py-3">
+                                <i class="fas fa-history fa-2x text-muted mb-3"></i>
+                                <p class="text-muted">Complete your first survey to see activity here.</p>
+                            </div>
                         {% endif %}
                     </div>
                 </div>
@@ -503,8 +756,8 @@
                 </div>
                 <div class="modal-body">
                     <form id="withdrawForm">
-                        <div class="mb-3">
-                            <label for="phoneNumber" class="form-label">M-Pesa Phone Number</label>
+                        <div class="mb-4">
+                            <label for="phoneNumber" class="form-label fw-semibold">M-Pesa Phone Number</label>
                             <div class="phone-input-group">
                                 <span class="phone-prefix">+254</span>
                                 <input type="tel" class="form-control phone-input" id="phoneNumber" 
@@ -513,10 +766,10 @@
                             <div class="form-text">Enter your M-Pesa registered phone number without +254</div>
                         </div>
                         
-                        <div class="mb-3">
-                            <label for="withdrawAmount" class="form-label">Amount to Withdraw</label>
+                        <div class="mb-4">
+                            <label for="withdrawAmount" class="form-label fw-semibold">Amount to Withdraw</label>
                             <div class="input-group">
-                                <span class="input-group-text">Ksh</span>
+                                <span class="input-group-text bg-light fw-semibold">Ksh</span>
                                 <input type="number" class="form-control" id="withdrawAmount" 
                                        value="{{ user.balance }}" min="50" max="{{ user.balance }}" step="10" required>
                             </div>
@@ -531,7 +784,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-withdraw text-white" id="confirmWithdrawBtn">
+                    <button type="button" class="btn btn-withdraw" id="confirmWithdrawBtn">
                         <i class="fas fa-paper-plane me-2"></i>Withdraw Now
                     </button>
                 </div>
@@ -542,9 +795,9 @@
     <!-- Floating Activate Button (Only show if not premium) -->
     {% if not user.is_premium %}
     <div class="activate-bottom-btn">
-        <a href="/auth/activate-premium/" class="btn btn-activate btn-lg text-white shadow-lg">
+        <button class="btn btn-activate btn-lg shadow-lg">
             <i class="fas fa-bolt me-2"></i> ACTIVATE PREMIUM
-        </a>
+        </button>
     </div>
     {% endif %}
 
@@ -570,6 +823,14 @@
         document.getElementById('inactiveWithdrawBtn').addEventListener('click', function() {
             alert('Account inactive. Please activate your premium account to withdraw funds.');
             window.location.href = '/auth/activate-premium/';
+        });
+        
+        // Add click handlers for activate buttons
+        const activateButtons = document.querySelectorAll('.btn-activate');
+        activateButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                window.location.href = '/auth/activate-premium/';
+            });
         });
         {% else %}
         // For premium users - handle withdraw functionality
@@ -627,17 +888,23 @@
             alert('Till number copied to clipboard: ' + text);
         }
 
-        // Redirect to activate premium when clicking activate buttons
-        document.addEventListener('DOMContentLoaded', function() {
-            const activateButtons = document.querySelectorAll('.btn-activate');
-            activateButtons.forEach(button => {
-                if (button.tagName === 'BUTTON') {
-                    button.addEventListener('click', function() {
-                        window.location.href = '/auth/activate-premium/';
-                    });
+        // Add animation on scroll
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.card');
+            
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('animate__fadeInUp');
                 }
             });
-        });
+        }
+        
+        window.addEventListener('scroll', animateOnScroll);
+        // Initial check
+        animateOnScroll();
     </script>
 </body>
 </html>

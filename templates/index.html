@@ -7,18 +7,34 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #6c5ce7;
+            --primary-dark: #5649c0;
             --primary-light: #a29bfe;
             --secondary: #00b894;
+            --secondary-dark: #00a085;
+            --accent: #fd79a8;
+            --accent-light: #ff9ebe;
             --success: #00b894;
             --warning: #fdcb6e;
             --premium: #e84393;
             --dark: #2d3436;
+            --dark-light: #636e72;
             --light: #f5f6fa;
             --gradient: linear-gradient(135deg, var(--primary), var(--primary-light));
+            --gradient-dark: linear-gradient(135deg, var(--primary-dark), var(--primary));
             --premium-gradient: linear-gradient(135deg, var(--premium), #fd79a8);
+            --success-gradient: linear-gradient(135deg, var(--success), #55efc4);
+            --shadow: 0 10px 30px rgba(0,0,0,0.08);
+            --shadow-hover: 0 15px 40px rgba(0,0,0,0.12);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
         
         body {
@@ -27,6 +43,11 @@
             color: var(--dark);
             overflow-x: hidden;
             line-height: 1.6;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 700;
+            line-height: 1.2;
         }
         
         /* Premium Badge */
@@ -38,11 +59,12 @@
             border-radius: 20px;
             font-weight: 600;
             letter-spacing: 0.5px;
+            box-shadow: 0 3px 10px rgba(232, 67, 147, 0.3);
         }
         
         /* Navbar */
         .navbar {
-            background: rgba(44, 44, 44, 0.95) !important;
+            background: rgba(44, 44, 44, 0.98) !important;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             box-shadow: 0 5px 30px rgba(0,0,0,0.1);
@@ -51,18 +73,34 @@
         }
         
         .navbar-brand {
-            font-weight: 700;
+            font-weight: 800;
             font-size: 1.5rem;
             background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+        }
+        
+        .navbar-nav .nav-link {
+            color: rgba(255,255,255,0.85) !important;
+            font-weight: 500;
+            padding: 8px 15px;
+            margin: 0 5px;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        
+        .navbar-nav .nav-link:hover {
+            color: white !important;
+            background: rgba(255,255,255,0.1);
         }
         
         /* Hero Section */
         .hero-section {
-            background: var(--gradient);
+            background: var(--gradient-dark);
             color: white;
-            padding: 150px 0 100px;
+            padding: 180px 0 120px;
             position: relative;
             overflow: hidden;
         }
@@ -74,41 +112,43 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyNTUsMjU1LDIU1LDAuMDUpIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCBmaWxsPSJ1cmwoI3BhdHRlcm4pIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIi8+PC9zdmc+');
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjA1KSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3QgZmlsbD0idXJsKCNwYXR0ZXJuKSIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIvPjwvc3ZnPg==');
             opacity: 0.3;
         }
         
         .hero-title {
             font-weight: 800;
-            font-size: 3.5rem;
-            line-height: 1.2;
-            margin-bottom: 20px;
+            font-size: 3.8rem;
+            line-height: 1.1;
+            margin-bottom: 25px;
             text-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         
         .hero-subtitle {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             opacity: 0.9;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
+            font-weight: 400;
         }
         
         .btn-cta {
             background: white;
             color: var(--primary);
             border: none;
-            padding: 15px 35px;
+            padding: 16px 40px;
             border-radius: 50px;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 1.1rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            box-shadow: var(--shadow);
             transition: all 0.3s;
             position: relative;
             overflow: hidden;
         }
         
         .btn-cta:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+            color: var(--primary);
         }
         
         .btn-cta::after {
@@ -127,36 +167,56 @@
             transform: translateX(100%);
         }
         
+        .btn-outline-light {
+            border: 2px solid rgba(255,255,255,0.3);
+            padding: 14px 35px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-outline-light:hover {
+            background: white;
+            color: var(--primary);
+            border-color: white;
+        }
+        
         /* Stats Section */
         .stats-section {
             background: white;
-            padding: 60px 0;
-            box-shadow: 0 5px 30px rgba(0,0,0,0.05);
+            padding: 80px 0;
+            box-shadow: var(--shadow);
+            position: relative;
+            z-index: 2;
         }
         
         .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 5px;
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            line-height: 1;
         }
         
         .stat-label {
             font-size: 1rem;
-            color: var(--dark);
+            color: var(--dark-light);
             font-weight: 500;
         }
         
         /* How It Works */
         .how-it-works {
-            padding: 100px 0;
+            padding: 120px 0;
             background: white;
+            position: relative;
         }
         
         .section-title {
-            font-weight: 700;
-            font-size: 2.5rem;
-            margin-bottom: 60px;
+            font-weight: 800;
+            font-size: 2.8rem;
+            margin-bottom: 70px;
             position: relative;
             display: inline-block;
         }
@@ -164,26 +224,27 @@
         .section-title::after {
             content: "";
             position: absolute;
-            bottom: -15px;
+            bottom: -20px;
             left: 50%;
             transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
+            width: 100px;
+            height: 5px;
             background: var(--gradient);
-            border-radius: 2px;
+            border-radius: 3px;
         }
         
         .step-card {
             background: white;
-            border-radius: 15px;
-            padding: 40px 25px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+            border-radius: 20px;
+            padding: 50px 30px;
+            box-shadow: var(--shadow);
             transition: all 0.4s;
             position: relative;
             overflow: hidden;
             z-index: 1;
             text-align: center;
             height: 100%;
+            border: 1px solid rgba(0,0,0,0.03);
         }
         
         .step-card::before {
@@ -197,101 +258,147 @@
         }
         
         .step-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 50px rgba(0,0,0,0.1);
+            transform: translateY(-15px);
+            box-shadow: var(--shadow-hover);
         }
         
         .step-number {
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
             background: var(--gradient);
             color: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
-            font-size: 1.5rem;
-            margin: 0 auto 25px;
-            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
+            font-weight: 800;
+            font-size: 1.8rem;
+            margin: 0 auto 30px;
+            box-shadow: 0 8px 20px rgba(108, 92, 231, 0.3);
         }
         
         .step-title {
-            font-weight: 600;
-            font-size: 1.4rem;
-            margin-bottom: 15px;
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
             color: var(--primary);
+        }
+        
+        .step-card p {
+            color: var(--dark-light);
+            margin-bottom: 20px;
         }
         
         /* Features Section */
         .features-section {
-            padding: 100px 0;
+            padding: 120px 0;
             background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            position: relative;
         }
         
         .feature-icon {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 20px;
+            width: 80px;
+            height: 80px;
+            background: var(--gradient);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            color: white;
+            margin: 0 auto 25px;
+            box-shadow: 0 8px 20px rgba(108, 92, 231, 0.3);
         }
         
         .feature-card {
             background: white;
-            border-radius: 15px;
-            padding: 40px 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-radius: 20px;
+            padding: 50px 30px;
+            box-shadow: var(--shadow);
             transition: all 0.3s;
             text-align: center;
             height: 100%;
+            border: 1px solid rgba(0,0,0,0.03);
         }
         
         .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .feature-card h4 {
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+        
+        .feature-card p {
+            color: var(--dark-light);
         }
         
         /* Testimonials */
+        .testimonials-section {
+            padding: 120px 0;
+            background: white;
+        }
+        
         .testimonial-card {
             background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
             margin-bottom: 20px;
-            border-left: 4px solid var(--primary);
+            border-left: 5px solid var(--primary);
             transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
         }
         
         .testimonial-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
         }
         
         .testimonial-text {
             font-style: italic;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             position: relative;
+            color: var(--dark);
+            font-size: 1.05rem;
         }
         
         .testimonial-text:before {
             content: """;
-            font-size: 4rem;
+            font-size: 5rem;
             color: var(--primary-light);
             opacity: 0.2;
             position: absolute;
-            top: -20px;
+            top: -30px;
             left: -10px;
             font-family: Georgia, serif;
+            line-height: 1;
         }
         
         .testimonial-author {
-            font-weight: 600;
+            font-weight: 700;
             color: var(--dark);
             margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .testimonial-author:before {
+            content: "";
+            width: 30px;
+            height: 2px;
+            background: var(--primary);
+            margin-right: 10px;
         }
         
         .testimonial-role {
             font-size: 0.9rem;
-            color: #6c757d;
+            color: var(--dark-light);
+            font-weight: 500;
         }
         
         /* Trust Badges */
@@ -299,71 +406,118 @@
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 15px;
-            margin: 30px 0;
+            gap: 20px;
+            margin: 40px 0;
         }
         
         .trust-badge {
             display: flex;
             align-items: center;
-            background: white;
-            padding: 10px 20px;
-            border-radius: 8px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-            font-weight: 500;
-            color: var(--dark);
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
         
         .trust-badge i {
-            margin-right: 8px;
-            color: var(--success);
+            margin-right: 10px;
+            font-size: 1.2rem;
         }
         
         /* Security Badge */
         .security-badge {
             display: inline-flex;
             align-items: center;
-            background: rgba(0, 184, 148, 0.1);
+            background: rgba(0, 184, 148, 0.15);
             color: var(--success);
-            padding: 5px 15px;
-            border-radius: 20px;
+            padding: 8px 18px;
+            border-radius: 50px;
             font-size: 0.9rem;
-            font-weight: 500;
+            font-weight: 600;
             margin: 5px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
         }
         
         /* Footer */
         .footer {
             background: var(--dark);
             color: white;
-            padding: 60px 0 30px;
+            padding: 80px 0 40px;
         }
         
         .footer-logo {
-            font-weight: 700;
-            font-size: 1.8rem;
-            margin-bottom: 20px;
+            font-weight: 800;
+            font-size: 2rem;
+            margin-bottom: 25px;
             background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+        }
+        
+        .footer p {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 25px;
+        }
+        
+        .footer h5 {
+            color: white;
+            margin-bottom: 25px;
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer h5:after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+        
+        .footer ul li {
+            margin-bottom: 12px;
+        }
+        
+        .footer ul li a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .footer ul li a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
         }
         
         .social-links a {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             background: rgba(255,255,255,0.1);
             border-radius: 50%;
             color: white;
-            margin-right: 10px;
             transition: all 0.3s;
         }
         
         .social-links a:hover {
             background: var(--primary);
-            transform: translateY(-3px);
+            transform: translateY(-5px);
         }
         
         /* Animations */
@@ -386,7 +540,7 @@
         
         @keyframes floating {
             0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
+            50% { transform: translateY(-20px); }
             100% { transform: translateY(0px); }
         }
         
@@ -395,30 +549,76 @@
             background-color: #25D366;
             color: white;
             border-radius: 50px;
-            padding: 10px 20px;
+            padding: 12px 25px;
             font-weight: 600;
             transition: all 0.3s;
+            border: none;
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
         }
         
         .btn-whatsapp:hover {
             background-color: #128C7E;
             color: white;
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
         }
         
         /* Premium CTA */
         .premium-cta {
             background: var(--premium-gradient);
             color: white;
-            padding: 80px 0;
+            padding: 100px 0;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .premium-cta::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjA1KSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3QgZmlsbD0idXJsKCNwYXR0ZXJuKSIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIvPjwvc3ZnPg==');
+            opacity: 0.2;
+        }
+        
+        .premium-cta h2 {
+            font-weight: 800;
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .premium-cta .lead {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+        
+        .btn-light {
+            background: white;
+            color: var(--premium);
+            border: none;
+            padding: 16px 40px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            transition: all 0.3s;
+        }
+        
+        .btn-light:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+            color: var(--premium);
         }
         
         /* Auth Section Styles */
         .auth-section {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 15px;
         }
         
         .user-welcome {
@@ -431,9 +631,10 @@
             background: transparent;
             border: 1px solid rgba(255,255,255,0.3);
             color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
+            padding: 8px 20px;
+            border-radius: 50px;
             transition: all 0.3s;
+            font-weight: 500;
         }
         
         .btn-logout:hover {
@@ -441,14 +642,35 @@
             color: white;
         }
         
+        /* Divider */
+        .divider {
+            height: 1px;
+            background: rgba(255,255,255,0.1);
+            margin: 30px 0;
+        }
+        
         /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .section-title {
+                font-size: 2.3rem;
+            }
+            
+            .premium-cta h2 {
+                font-size: 2.5rem;
+            }
+        }
+        
         @media (max-width: 768px) {
             .hero-title {
                 font-size: 2.5rem;
             }
             
             .hero-subtitle {
-                font-size: 1.1rem;
+                font-size: 1.2rem;
             }
             
             .section-title {
@@ -456,12 +678,36 @@
             }
             
             .stat-number {
-                font-size: 2rem;
+                font-size: 2.5rem;
             }
             
             .auth-section {
                 flex-direction: column;
-                gap: 5px;
+                gap: 10px;
+                margin-top: 15px;
+            }
+            
+            .premium-cta h2 {
+                font-size: 2rem;
+            }
+            
+            .premium-cta .lead {
+                font-size: 1.1rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero-section {
+                padding: 150px 0 80px;
+            }
+            
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            
+            .trust-badges {
+                flex-direction: column;
+                align-items: center;
             }
         }
     </style>
@@ -471,30 +717,51 @@
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <i class="fas fa-coins me-2"></i>QuestionClicks2Mpesa <span class="premium-badge">PREMIUM</span>
+                <i class="fas fa-coins me-2"></i>QuestionClicks2Mpesa <span class="premium-badge ms-2">PREMIUM</span>
             </a>
             
-            <!-- Dynamic Auth Section -->
-            <div class="d-none d-lg-block ms-auto">
-                <div class="auth-section">
-                    {% if user.is_authenticated %}
-                        <span class="user-welcome">
-                            <i class="fas fa-user me-1"></i>Welcome, {{ user.phone_number }}
-                        </span>
-                        <a href="/auth/dashboard/" class="btn btn-outline-light me-2">
-                            <i class="fas fa-tachometer-alt me-1"></i>Dashboard
-                        </a>
-                        <a href="/auth/logout/" class="btn-logout">
-                            <i class="fas fa-sign-out-alt me-1"></i>Logout
-                        </a>
-                    {% else %}
-                        <a href="/auth/login/" class="btn btn-outline-light me-2">
-                            <i class="fas fa-sign-in-alt me-1"></i>Login
-                        </a>
-                        <a href="/auth/register/" class="btn btn-primary">
-                            <i class="fas fa-user-plus me-1"></i>Get Started
-                        </a>
-                    {% endif %}
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#how-it-works">How It Works</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#testimonials">Testimonials</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">FAQ</a>
+                    </li>
+                </ul>
+                
+                <!-- Dynamic Auth Section -->
+                <div class="auth-section ms-lg-3">
+                    <!-- For demo purposes, showing authenticated state -->
+                    <span class="user-welcome d-none d-md-block">
+                        <i class="fas fa-user me-1"></i>Welcome, 0712 *** 456
+                    </span>
+                    <a href="/auth/dashboard/" class="btn btn-outline-light me-2">
+                        <i class="fas fa-tachometer-alt me-1"></i>Dashboard
+                    </a>
+                    <a href="/auth/logout/" class="btn-logout">
+                        <i class="fas fa-sign-out-alt me-1"></i>Logout
+                    </a>
+                    
+                    <!-- Uncomment below and remove above for unauthenticated state -->
+                    <!--
+                    <a href="/auth/login/" class="btn btn-outline-light me-2">
+                        <i class="fas fa-sign-in-alt me-1"></i>Login
+                    </a>
+                    <a href="/auth/register/" class="btn btn-cta">
+                        <i class="fas fa-user-plus me-1"></i>Get Started
+                    </a>
+                    -->
                 </div>
             </div>
         </div>
@@ -504,12 +771,12 @@
     <section class="hero-section">
         <div class="container text-center position-relative">
             <div class="row justify-content-center">
-                <div class="col-lg-8">
+                <div class="col-lg-9">
                     <h1 class="hero-title animate__animated animate__fadeInDown">
-                        Kenya's Premier Survey Platform
+                        Kenya's Premier <span class="text-warning">Survey Platform</span>
                     </h1>
                     <p class="hero-subtitle animate__animated animate__fadeIn animate__delay-1s">
-                        Join <strong>50,000+ Kenyans</strong> earning <strong>Ksh 10-200 per task</strong> by sharing opinions and completing surveys
+                        Join <strong class="text-warning">50,000+ Kenyans</strong> earning <strong>Ksh 10-200 per task</strong> by sharing opinions and completing surveys
                     </p>
                     
                     <div class="trust-badges animate__animated animate__fadeIn animate__delay-2s">
@@ -524,24 +791,60 @@
                         </div>
                     </div>
                     
-                    <div class="animate__animated animate__fadeIn animate__delay-3s">
-                        {% if user.is_authenticated %}
-                            <a href="/auth/dashboard/" class="btn btn-cta me-3">
-                                <i class="fas fa-tachometer-alt me-2"></i> Go to Dashboard
-                            </a>
-                        {% else %}
-                            <a href="/auth/register/" class="btn btn-cta me-3">
-                                <i class="fas fa-rocket me-2"></i> Start Earning Now
-                            </a>
-                            <a href="#how-it-works" class="btn btn-outline-light">
-                                <i class="fas fa-play-circle me-2"></i> How It Works
-                            </a>
-                        {% endif %}
+                    <div class="animate__animated animate__fadeIn animate__delay-3s mt-4">
+                        <!-- For demo, showing authenticated state -->
+                        <a href="/auth/dashboard/" class="btn btn-cta me-3 mb-3">
+                            <i class="fas fa-tachometer-alt me-2"></i> Go to Dashboard
+                        </a>
+                        <a href="#how-it-works" class="btn btn-outline-light mb-3">
+                            <i class="fas fa-play-circle me-2"></i> How It Works
+                        </a>
+                        
+                        <!-- Uncomment below and remove above for unauthenticated state -->
+                        <!--
+                        <a href="/auth/register/" class="btn btn-cta me-3 mb-3">
+                            <i class="fas fa-rocket me-2"></i> Start Earning Now
+                        </a>
+                        <a href="#how-it-works" class="btn btn-outline-light mb-3">
+                            <i class="fas fa-play-circle me-2"></i> How It Works
+                        </a>
+                        -->
                     </div>
                 </div>
             </div>
             <div class="mt-5 animate__animated animate__fadeIn animate__delay-4s">
-                <img src="https://via.placeholder.com/600x400" alt="Earn Money with Surveys" class="img-fluid rounded-4 shadow-lg floating" style="max-width: 80%; border: 10px solid white;">
+                <!-- Placeholder for dashboard screenshot -->
+                <div class="bg-white rounded-4 shadow-lg floating p-4 mx-auto" style="max-width: 800px; border: 15px solid white;">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div>
+                            <h4 class="mb-1">Your Dashboard</h4>
+                            <p class="text-muted mb-0">Earnings Overview</p>
+                        </div>
+                        <div class="text-end">
+                            <h3 class="text-success mb-0">Ksh 500</h3>
+                            <small class="text-muted">Available Balance</small>
+                        </div>
+                    </div>
+                    <div class="row text-center">
+                        <div class="col-4">
+                            <h5 class="mb-1">Ksh 500</h5>
+                            <small class="text-muted">Total Earned</small>
+                        </div>
+                        <div class="col-4">
+                            <h5 class="mb-1">18</h5>
+                            <small class="text-muted">Surveys Completed</small>
+                        </div>
+                        <div class="col-4">
+                            <h5 class="mb-1">Ksh 0</h5>
+                            <small class="text-muted">Avg. Per Survey</small>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <button class="btn btn-success w-100 py-2">
+                            <i class="fas fa-money-bill-wave me-2"></i>Withdraw to M-Pesa
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -550,19 +853,19 @@
     <section class="stats-section">
         <div class="container">
             <div class="row text-center">
-                <div class="col-md-3 mb-4">
+                <div class="col-md-3 col-6 mb-4">
                     <div class="stat-number">50,000+</div>
                     <div class="stat-label">Active Members</div>
                 </div>
-                <div class="col-md-3 mb-4">
+                <div class="col-md-3 col-6 mb-4">
                     <div class="stat-number">Ksh 12.5M+</div>
                     <div class="stat-label">Paid to Members</div>
                 </div>
-                <div class="col-md-3 mb-4">
+                <div class="col-md-3 col-6 mb-4">
                     <div class="stat-number">98%</div>
                     <div class="stat-label">Payment Success Rate</div>
                 </div>
-                <div class="col-md-3 mb-4">
+                <div class="col-md-3 col-6 mb-4">
                     <div class="stat-number">350+</div>
                     <div class="stat-label">Brand Partners</div>
                 </div>
@@ -582,6 +885,10 @@
                         <div class="step-number">1</div>
                         <h3 class="step-title">Quick Sign Up</h3>
                         <p>Create your free account in under 30 seconds using your phone number. No documents required.</p>
+                        <div class="mt-3">
+                            <i class="fas fa-clock text-primary me-1"></i> <small>30 seconds</small>
+                            <i class="fas fa-mobile-alt text-primary ms-3 me-1"></i> <small>Phone number only</small>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-4 animate__animated animate__fadeInUp animate-delay-2">
@@ -592,6 +899,10 @@
                         <span class="security-badge">
                             <i class="fas fa-lock me-1"></i> Secure M-Pesa Payment
                         </span>
+                        <div class="mt-3">
+                            <i class="fas fa-unlock text-primary me-1"></i> <small>One-time fee</small>
+                            <i class="fas fa-chart-line text-primary ms-3 me-1"></i> <small>Higher payouts</small>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-4 animate__animated animate__fadeInUp animate-delay-3">
@@ -599,6 +910,10 @@
                         <div class="step-number">3</div>
                         <h3 class="step-title">Earn & Withdraw</h3>
                         <p>Complete simple tasks, share products on WhatsApp, and withdraw earnings instantly to your M-Pesa.</p>
+                        <div class="mt-3">
+                            <i class="fas fa-bolt text-primary me-1"></i> <small>Instant withdrawals</small>
+                            <i class="fas fa-tasks text-primary ms-3 me-1"></i> <small>Simple tasks</small>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -642,7 +957,7 @@
     </section>
 
     <!-- Testimonials -->
-    <section class="py-5 bg-light">
+    <section class="testimonials-section" id="testimonials">
         <div class="container">
             <h2 class="section-title text-center mb-5">Success Stories from Our Members</h2>
             <div class="row">
@@ -651,7 +966,7 @@
                         <p class="testimonial-text">"I've earned over Ksh 15,000 in just two months. The surveys are interesting and payments always arrive instantly to my M-Pesa."</p>
                         <div class="testimonial-author">Sarah M., Nairobi</div>
                         <div class="testimonial-role">Premium Member since 2023</div>
-                        <div class="text-warning mt-2">
+                        <div class="text-warning mt-3">
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
@@ -665,7 +980,7 @@
                         <p class="testimonial-text">"As a student, this platform has been a game-changer. I complete surveys between classes and the extra income really helps."</p>
                         <div class="testimonial-author">David K., Mombasa</div>
                         <div class="testimonial-role">Member since 2022</div>
-                        <div class="text-warning mt-2">
+                        <div class="text-warning mt-3">
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
@@ -679,7 +994,7 @@
                         <p class="testimonial-text">"The premium activation was worth every shilling! I now get access to surveys that pay Ksh 150-200 each. Highly recommended!"</p>
                         <div class="testimonial-author">Grace W., Kisumu</div>
                         <div class="testimonial-role">Premium Member</div>
-                        <div class="text-warning mt-2">
+                        <div class="text-warning mt-3">
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
@@ -694,8 +1009,8 @@
 
     <!-- Premium CTA Section -->
     <section class="premium-cta">
-        <div class="container">
-            <h2 class="display-5 mb-4">Ready to Unlock Premium Earnings?</h2>
+        <div class="container position-relative">
+            <h2 class="mb-4">Ready to Unlock Premium Earnings?</h2>
             <p class="lead mb-5">Join thousands of Kenyans making real money from their phones</p>
             <div class="mb-4">
                 <span class="security-badge" style="background: rgba(255,255,255,0.2); color: white;">
@@ -706,15 +1021,17 @@
                 </span>
             </div>
             
-            {% if user.is_authenticated %}
-                <a href="/auth/dashboard/" class="btn btn-light btn-lg px-5 py-3 me-3">
-                    <i class="fas fa-tachometer-alt me-2"></i> Go to Dashboard
-                </a>
-            {% else %}
-                <a href="/auth/register/" class="btn btn-light btn-lg px-5 py-3 me-3">
-                    <i class="fas fa-user-plus me-2"></i> Start Free Registration
-                </a>
-            {% endif %}
+            <!-- For demo, showing authenticated state -->
+            <a href="/auth/dashboard/" class="btn btn-light btn-lg px-5 py-3 me-3 mb-3">
+                <i class="fas fa-tachometer-alt me-2"></i> Go to Dashboard
+            </a>
+            
+            <!-- Uncomment below and remove above for unauthenticated state -->
+            <!--
+            <a href="/auth/register/" class="btn btn-light btn-lg px-5 py-3 me-3 mb-3">
+                <i class="fas fa-user-plus me-2"></i> Start Free Registration
+            </a>
+            -->
             
             <div class="mt-4">
                 <a href="https://wa.me/254750673216?text=Hello%20I%20need%20help%20with%20Survey" class="btn btn-whatsapp">
@@ -728,7 +1045,7 @@
     <footer class="footer">
         <div class="container">
             <div class="row">
-                <div class="col-lg-4 mb-4">
+                <div class="col-lg-4 mb-5">
                     <div class="footer-logo">
                         <i class="fas fa-coins me-2"></i>QuestionClicks2Mpesa
                     </div>
@@ -740,51 +1057,59 @@
                         <a href="https://wa.me/254750673216?text=Hello%20I%20need%20help"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
-                <div class="col-lg-2 col-md-4 mb-4">
-                    <h5 class="text-white mb-4">Quick Links</h5>
+                <div class="col-lg-2 col-md-4 mb-5">
+                    <h5>Quick Links</h5>
                     <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#" class="text-white-50">Home</a></li>
-                        <li class="mb-2"><a href="#how-it-works" class="text-white-50">How It Works</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50">Earnings</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50">Testimonials</a></li>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#">Earnings</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-2 col-md-4 mb-4">
-                    <h5 class="text-white mb-4">Account</h5>
+                <div class="col-lg-2 col-md-4 mb-5">
+                    <h5>Account</h5>
                     <ul class="list-unstyled">
-                        {% if user.is_authenticated %}
-                            <li class="mb-2"><a href="/auth/dashboard/" class="text-white-50">Dashboard</a></li>
-                            <li class="mb-2"><a href="/auth/logout/" class="text-white-50">Logout</a></li>
-                        {% else %}
-                            <li class="mb-2"><a href="/auth/login/" class="text-white-50">Login</a></li>
-                            <li class="mb-2"><a href="/auth/register/" class="text-white-50">Register</a></li>
-                        {% endif %}
-                        <li class="mb-2"><a href="#" class="text-white-50">Forgot Password</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-4 col-md-4 mb-4">
-                    <h5 class="text-white mb-4">Contact Support</h5>
-                    <ul class="list-unstyled text-white-50">
-                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> support@questionclicks.co.ke</li>
+                        <!-- For demo, showing authenticated state -->
+                        <li><a href="/auth/dashboard/">Dashboard</a></li>
+                        <li><a href="/auth/logout/">Logout</a></li>
                         
-                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Nairobi, Kenya</li>
-                        <li class="mb-2">
-                            <a href="https://wa.me/254750673216?text=Hello%20I%20need%20help" class="text-white-50">
+                        <!-- Uncomment below and remove above for unauthenticated state -->
+                        <!--
+                        <li><a href="/auth/login/">Login</a></li>
+                        <li><a href="/auth/register/">Register</a></li>
+                        -->
+                        <li><a href="#">Forgot Password</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4 mb-5">
+                    <h5>Contact Support</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-3">
+                            <i class="fas fa-envelope me-2"></i> support@questionclicks.co.ke
+                        </li>
+                        <li class="mb-3">
+                            <i class="fas fa-phone me-2"></i> +254 750 673 216
+                        </li>
+                        <li class="mb-3">
+                            <i class="fas fa-map-marker-alt me-2"></i> Nairobi, Kenya
+                        </li>
+                        <li class="mb-3">
+                            <a href="https://wa.me/254750673216?text=Hello%20I%20need%20help">
                                 <i class="fab fa-whatsapp me-2"></i> WhatsApp Support
                             </a>
                         </li>
                     </ul>
                 </div>
             </div>
-            <hr class="my-4 bg-secondary">
+            <div class="divider"></div>
             <div class="row">
                 <div class="col-md-6 text-center text-md-start">
-                    <p class="small mb-0">© 2024 QuestionClicks2Mpesa. All rights reserved.</p>
+                    <p class="mb-0">© 2024 QuestionClicks2Mpesa. All rights reserved.</p>
                 </div>
                 <div class="col-md-6 text-center text-md-end">
-                    <p class="small mb-0">
-                        <a href="#" class="text-white-50">Terms of Service</a> | 
-                        <a href="#" class="text-white-50">Privacy Policy</a>
+                    <p class="mb-0">
+                        <a href="#">Terms of Service</a> | 
+                        <a href="#">Privacy Policy</a>
                     </p>
                 </div>
             </div>
@@ -809,11 +1134,33 @@
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
             });
         });
+        
+        // Animation on scroll
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.step-card, .feature-card, .testimonial-card');
+            
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('animate__fadeInUp');
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', animateOnScroll);
+        // Initial check
+        animateOnScroll();
     </script>
 </body>
 </html>
