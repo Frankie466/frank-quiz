@@ -649,10 +649,78 @@
             margin: 30px 0;
         }
         
+        /* Enhanced Sign-up Button */
+        .btn-signup {
+            background: var(--success-gradient);
+            color: white;
+            border: none;
+            padding: 16px 35px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 8px 25px rgba(0, 184, 148, 0.3);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            animation: pulse-glow 2s infinite;
+        }
+        
+        .btn-signup:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 184, 148, 0.4);
+            color: white;
+        }
+        
+        @keyframes pulse-glow {
+            0% {
+                box-shadow: 0 0 0 0 rgba(0, 184, 148, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(0, 184, 148, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(0, 184, 148, 0);
+            }
+        }
+        
+        /* Mobile Sign-up Sticky Bar */
+        .mobile-signup-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--gradient-dark);
+            color: white;
+            padding: 15px;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            display: none;
+        }
+        
+        .mobile-signup-bar .btn-signup {
+            width: 100%;
+            font-size: 1rem;
+            padding: 14px 20px;
+        }
+        
         /* Responsive Adjustments */
+        @media (max-width: 1200px) {
+            .hero-title {
+                font-size: 3.2rem;
+            }
+            
+            .section-title {
+                font-size: 2.5rem;
+            }
+        }
+        
         @media (max-width: 992px) {
             .hero-title {
-                font-size: 3rem;
+                font-size: 2.8rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.3rem;
             }
             
             .section-title {
@@ -662,19 +730,34 @@
             .premium-cta h2 {
                 font-size: 2.5rem;
             }
+            
+            .step-card, .feature-card {
+                padding: 40px 25px;
+            }
+            
+            .navbar-brand {
+                font-size: 1.3rem;
+            }
         }
         
         @media (max-width: 768px) {
+            .hero-section {
+                padding: 150px 0 80px;
+            }
+            
             .hero-title {
                 font-size: 2.5rem;
+                text-align: center;
             }
             
             .hero-subtitle {
                 font-size: 1.2rem;
+                text-align: center;
             }
             
             .section-title {
                 font-size: 2rem;
+                text-align: center;
             }
             
             .stat-number {
@@ -685,6 +768,12 @@
                 flex-direction: column;
                 gap: 10px;
                 margin-top: 15px;
+                width: 100%;
+            }
+            
+            .auth-section .btn {
+                width: 100%;
+                text-align: center;
             }
             
             .premium-cta h2 {
@@ -694,25 +783,146 @@
             .premium-cta .lead {
                 font-size: 1.1rem;
             }
+            
+            .step-card, .feature-card, .testimonial-card {
+                margin-bottom: 20px;
+            }
+            
+            .trust-badges {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .trust-badge {
+                width: 100%;
+                max-width: 250px;
+                justify-content: center;
+            }
+            
+            .mobile-signup-bar {
+                display: block;
+            }
+            
+            .btn-cta, .btn-outline-light {
+                width: 100%;
+                margin-bottom: 10px;
+                text-align: center;
+            }
+            
+            .hero-buttons {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .navbar-collapse {
+                background: rgba(44, 44, 44, 0.98);
+                padding: 20px;
+                border-radius: 10px;
+                margin-top: 10px;
+            }
+            
+            .navbar-nav {
+                text-align: center;
+            }
+            
+            .navbar-nav .nav-link {
+                margin: 5px 0;
+            }
         }
         
         @media (max-width: 576px) {
             .hero-section {
-                padding: 150px 0 80px;
+                padding: 130px 0 60px;
             }
             
             .hero-title {
                 font-size: 2.2rem;
             }
             
-            .trust-badges {
-                flex-direction: column;
-                align-items: center;
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .stat-number {
+                font-size: 2rem;
+            }
+            
+            .step-card, .feature-card {
+                padding: 30px 20px;
+            }
+            
+            .step-number {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+            
+            .feature-icon {
+                width: 70px;
+                height: 70px;
+                font-size: 1.8rem;
+            }
+            
+            .premium-cta {
+                padding: 80px 0;
+            }
+            
+            .premium-cta h2 {
+                font-size: 1.8rem;
+            }
+            
+            .footer {
+                padding: 60px 0 30px;
+            }
+            
+            .footer-logo {
+                font-size: 1.7rem;
+            }
+            
+            .btn-light, .btn-cta, .btn-signup {
+                padding: 14px 30px;
+                font-size: 1rem;
+            }
+            
+            .testimonial-card {
+                padding: 30px 20px;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .hero-title {
+                font-size: 1.9rem;
+            }
+            
+            .section-title {
+                font-size: 1.6rem;
+            }
+            
+            .navbar-brand {
+                font-size: 1.1rem;
+            }
+            
+            .premium-badge {
+                font-size: 0.6rem;
+                padding: 2px 8px;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Mobile Sign-up Sticky Bar -->
+    <div class="mobile-signup-bar d-lg-none">
+        <a href="/auth/register/" class="btn btn-signup">
+            <i class="fas fa-rocket me-2"></i> Start Earning Now - FREE
+        </a>
+    </div>
+
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
@@ -742,7 +952,16 @@
                 
                 <!-- Dynamic Auth Section -->
                 <div class="auth-section ms-lg-3">
-                    <!-- For demo purposes, showing authenticated state -->
+                    <!-- For demo purposes, showing unauthenticated state with enhanced sign-up button -->
+                    <a href="/auth/login/" class="btn btn-outline-light me-2">
+                        <i class="fas fa-sign-in-alt me-1"></i>Login
+                    </a>
+                    <a href="/auth/register/" class="btn btn-signup d-none d-md-inline-block">
+                        <i class="fas fa-user-plus me-1"></i>Get Started
+                    </a>
+                    
+                    <!-- Uncomment below and remove above for authenticated state -->
+                    <!--
                     <span class="user-welcome d-none d-md-block">
                         <i class="fas fa-user me-1"></i>Welcome, 0712 *** 456
                     </span>
@@ -751,15 +970,6 @@
                     </a>
                     <a href="/auth/logout/" class="btn-logout">
                         <i class="fas fa-sign-out-alt me-1"></i>Logout
-                    </a>
-                    
-                    <!-- Uncomment below and remove above for unauthenticated state -->
-                    <!--
-                    <a href="/auth/login/" class="btn btn-outline-light me-2">
-                        <i class="fas fa-sign-in-alt me-1"></i>Login
-                    </a>
-                    <a href="/auth/register/" class="btn btn-cta">
-                        <i class="fas fa-user-plus me-1"></i>Get Started
                     </a>
                     -->
                 </div>
@@ -791,19 +1001,19 @@
                         </div>
                     </div>
                     
-                    <div class="animate__animated animate__fadeIn animate__delay-3s mt-4">
-                        <!-- For demo, showing authenticated state -->
-                        <a href="/auth/dashboard/" class="btn btn-cta me-3 mb-3">
-                            <i class="fas fa-tachometer-alt me-2"></i> Go to Dashboard
+                    <div class="animate__animated animate__fadeIn animate__delay-3s mt-4 hero-buttons">
+                        <!-- For demo, showing unauthenticated state with enhanced sign-up button -->
+                        <a href="/auth/register/" class="btn btn-signup me-3 mb-3">
+                            <i class="fas fa-rocket me-2"></i> Start Earning Now - FREE
                         </a>
                         <a href="#how-it-works" class="btn btn-outline-light mb-3">
                             <i class="fas fa-play-circle me-2"></i> How It Works
                         </a>
                         
-                        <!-- Uncomment below and remove above for unauthenticated state -->
+                        <!-- Uncomment below and remove above for authenticated state -->
                         <!--
-                        <a href="/auth/register/" class="btn btn-cta me-3 mb-3">
-                            <i class="fas fa-rocket me-2"></i> Start Earning Now
+                        <a href="/auth/dashboard/" class="btn btn-cta me-3 mb-3">
+                            <i class="fas fa-tachometer-alt me-2"></i> Go to Dashboard
                         </a>
                         <a href="#how-it-works" class="btn btn-outline-light mb-3">
                             <i class="fas fa-play-circle me-2"></i> How It Works
@@ -917,6 +1127,14 @@
                     </div>
                 </div>
             </div>
+            
+            <!-- Additional Sign-up CTA -->
+            <div class="text-center mt-5">
+                <a href="/auth/register/" class="btn btn-signup btn-lg">
+                    <i class="fas fa-rocket me-2"></i> Start Your Journey Now - FREE Registration
+                </a>
+                <p class="text-muted mt-3">No credit card required. Start earning in minutes.</p>
+            </div>
         </div>
     </section>
 
@@ -1021,20 +1239,20 @@
                 </span>
             </div>
             
-            <!-- For demo, showing authenticated state -->
-            <a href="/auth/dashboard/" class="btn btn-light btn-lg px-5 py-3 me-3 mb-3">
-                <i class="fas fa-tachometer-alt me-2"></i> Go to Dashboard
-            </a>
-            
-            <!-- Uncomment below and remove above for unauthenticated state -->
-            <!--
+            <!-- For demo, showing unauthenticated state with enhanced sign-up button -->
             <a href="/auth/register/" class="btn btn-light btn-lg px-5 py-3 me-3 mb-3">
                 <i class="fas fa-user-plus me-2"></i> Start Free Registration
+            </a>
+            
+            <!-- Uncomment below and remove above for authenticated state -->
+            <!--
+            <a href="/auth/dashboard/" class="btn btn-light btn-lg px-5 py-3 me-3 mb-3">
+                <i class="fas fa-tachometer-alt me-2"></i> Go to Dashboard
             </a>
             -->
             
             <div class="mt-4">
-                <a href="https://wa.me/254737619974?text=Hello%20I%20need%20help%20with%20Survey" class="btn btn-whatsapp">
+                <a href="https://wa.me/254750673216?text=Hello%20I%20need%20help%20with%20Survey" class="btn btn-whatsapp">
                     <i class="fab fa-whatsapp me-2"></i> Chat with Support
                 </a>
             </div>
@@ -1054,7 +1272,7 @@
                         <a href="#"><i class="fab fa-facebook-f"></i></a>
                         <a href="#"><i class="fab fa-twitter"></i></a>
                         <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="https://wa.me/254737619974?text=Hello%20I%20need%20help"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://wa.me/254750673216?text=Hello%20I%20need%20help"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-4 mb-5">
@@ -1069,16 +1287,16 @@
                 <div class="col-lg-2 col-md-4 mb-5">
                     <h5>Account</h5>
                     <ul class="list-unstyled">
-                        <!-- For demo, showing authenticated state -->
-                        <li><a href="/auth/dashboard/">Dashboard</a></li>
-                        <li><a href="/auth/logout/">Logout</a></li>
-                        
-                        <!-- Uncomment below and remove above for unauthenticated state -->
-                        <!--
+                        <!-- For demo, showing unauthenticated state -->
                         <li><a href="/auth/login/">Login</a></li>
                         <li><a href="/auth/register/">Register</a></li>
-                        -->
                         <li><a href="#">Forgot Password</a></li>
+                        
+                        <!-- Uncomment below and remove above for authenticated state -->
+                        <!--
+                        <li><a href="/auth/dashboard/">Dashboard</a></li>
+                        <li><a href="/auth/logout/">Logout</a></li>
+                        -->
                     </ul>
                 </div>
                 <div class="col-lg-4 col-md-4 mb-5">
@@ -1094,7 +1312,7 @@
                             <i class="fas fa-map-marker-alt me-2"></i> Nairobi, Kenya
                         </li>
                         <li class="mb-3">
-                            <a href="https://wa.me/254737619974?text=Hello%20I%20need%20help">
+                            <a href="https://wa.me/254750673216?text=Hello%20I%20need%20help">
                                 <i class="fab fa-whatsapp me-2"></i> WhatsApp Support
                             </a>
                         </li>
