@@ -532,39 +532,32 @@
                                 <div class="mpesa-phone">
                                     <i class="fas fa-mobile-alt"></i>
                                 </div>
-                                <h4 class="mb-3">M-Pesa Payment Instructions</h4>
+                                <h4 class="mb-3">Activate Your Premium Account</h4>
                             </div>
                             
                             <div class="mb-4">
                                 <div class="instruction-step">
                                     <i class="fas fa-arrow-right text-primary me-2"></i>
-                                    Go to <strong>M-Pesa</strong> on your phone
+                                    Click the "Go to Activation Page" button below
                                 </div>
                                 <div class="instruction-step">
                                     <i class="fas fa-arrow-right text-primary me-2"></i>
-                                    Select <strong>Lipa Na M-Pesa > Buy Goods and Services</strong>
+                                    You will be redirected to our secure payment page
                                 </div>
                                 <div class="instruction-step">
                                     <i class="fas fa-arrow-right text-primary me-2"></i>
-                                    Enter Till Number: <strong>6957778</strong>
-                                    <button class="btn btn-sm btn-outline-primary ms-2" onclick="copyToClipboard('6957778')">
-                                        <i class="far fa-copy me-1"></i> Copy
-                                    </button>
+                                    Complete the payment process (Ksh 100)
                                 </div>
                                 <div class="instruction-step">
                                     <i class="fas fa-arrow-right text-primary me-2"></i>
-                                    Enter Amount: <strong>Ksh 100</strong>
-                                </div>
-                                <div class="instruction-step">
-                                    <i class="fas fa-arrow-right text-primary me-2"></i>
-                                    Enter your <strong>M-Pesa PIN</strong> and confirm
+                                    Your account will be activated automatically
                                 </div>
                             </div>
                             
                             <div class="text-center">
-                                <button class="btn btn-activate btn-lg">
-                                    <i class="fas fa-arrow-right me-2"></i> Go to Activation Page
-                                </button>
+                                <a href="https://lipana.dev/pay/account-activation" class="btn btn-activate btn-lg" target="_blank">
+                                    <i class="fas fa-external-link-alt me-2"></i> Go to Activation Page
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -795,41 +788,30 @@
     <!-- Floating Activate Button (Only show if not premium) -->
     {% if not user.is_premium %}
     <div class="activate-bottom-btn">
-        <button class="btn btn-activate btn-lg shadow-lg">
+        <a href="https://lipana.dev/pay/account-activation" class="btn btn-activate btn-lg shadow-lg" target="_blank">
             <i class="fas fa-bolt me-2"></i> ACTIVATE PREMIUM
-        </button>
+        </a>
     </div>
     {% endif %}
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Toggle payment instructions
-        function togglePaymentInstructions() {
-            const instructions = document.getElementById('paymentInstructions');
-            if (instructions) {
-                instructions.style.display = instructions.style.display === 'block' ? 'none' : 'block';
-                if (instructions.style.display === 'block') {
-                    instructions.scrollIntoView({ behavior: 'smooth' });
-                }
-            }
-        }
-
         // Set up click handlers for non-premium users
         {% if not user.is_premium %}
         document.getElementById('inactiveAlert').addEventListener('click', function() {
-            window.location.href = '/auth/activate-premium/';
+            window.open('https://lipana.dev/pay/account-activation', '_blank');
         });
         
         document.getElementById('inactiveWithdrawBtn').addEventListener('click', function() {
             alert('Account inactive. Please activate your premium account to withdraw funds.');
-            window.location.href = '/auth/activate-premium/';
+            window.open('https://lipana.dev/pay/account-activation', '_blank');
         });
         
         // Add click handlers for activate buttons
         const activateButtons = document.querySelectorAll('.btn-activate');
         activateButtons.forEach(button => {
             button.addEventListener('click', function() {
-                window.location.href = '/auth/activate-premium/';
+                window.open('https://lipana.dev/pay/account-activation', '_blank');
             });
         });
         {% else %}
@@ -881,12 +863,6 @@
             document.getElementById('withdrawAmount').value = {{ user.balance }};
         });
         {% endif %}
-
-        // Copy to clipboard function
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text);
-            alert('Till number copied to clipboard: ' + text);
-        }
 
         // Add animation on scroll
         function animateOnScroll() {
