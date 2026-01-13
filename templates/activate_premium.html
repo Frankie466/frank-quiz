@@ -43,9 +43,10 @@
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             min-height: 100vh;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             color: var(--dark);
             line-height: 1.6;
+            padding: 0;
         }
         
         h1, h2, h3, h4, h5, h6 {
@@ -60,6 +61,7 @@
             overflow: hidden;
             background: white;
             transition: all 0.3s;
+            margin: 0 auto;
         }
         
         .activation-card:hover {
@@ -70,7 +72,7 @@
         .card-header {
             background: var(--gradient);
             color: white;
-            padding: 30px;
+            padding: 25px 20px;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -89,20 +91,21 @@
         
         .card-header h3 {
             font-weight: 800;
-            font-size: 1.8rem;
-            margin-bottom: 10px;
+            font-size: 1.5rem;
+            margin-bottom: 8px;
             position: relative;
         }
         
         .card-header p {
-            font-size: 1.1rem;
+            font-size: 1rem;
             opacity: 0.9;
             font-weight: 500;
             position: relative;
+            line-height: 1.4;
         }
         
         .card-body {
-            padding: 40px;
+            padding: 25px 20px;
         }
         
         .payment-steps { 
@@ -112,13 +115,14 @@
         }
         
         .payment-steps li { 
-            margin-bottom: 18px; 
-            padding: 15px 20px 15px 55px; 
+            margin-bottom: 15px; 
+            padding: 14px 15px 14px 50px; 
             position: relative; 
             background: rgba(108, 92, 231, 0.05);
             border-radius: 12px;
             border-left: 4px solid var(--primary);
             transition: all 0.3s;
+            font-size: 0.95rem;
         }
         
         .payment-steps li:hover {
@@ -130,11 +134,11 @@
             content: counter(step);
             counter-increment: step;
             position: absolute;
-            left: 15px;
+            left: 12px;
             top: 50%;
             transform: translateY(-50%);
-            width: 30px;
-            height: 30px;
+            width: 28px;
+            height: 28px;
             background: var(--gradient);
             color: white;
             border-radius: 50%;
@@ -142,7 +146,7 @@
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             box-shadow: 0 3px 10px rgba(108, 92, 231, 0.3);
         }
         
@@ -150,14 +154,14 @@
             counter-reset: step;
         }
         
-        #phoneForm, #paymentPending, #successMessage, #errorMessage { 
+        #phoneForm, #paymentPending, #successMessage, #errorMessage, #manualPaymentSection { 
             display: none; 
         }
         
         .btn-activate {
             background: var(--gradient);
             border: none;
-            padding: 16px 30px;
+            padding: 16px 20px;
             border-radius: 12px;
             font-weight: 700;
             letter-spacing: 0.5px;
@@ -165,7 +169,7 @@
             color: white;
             box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
             width: 100%;
-            font-size: 1.1rem;
+            font-size: 1rem;
             margin-top: 10px;
         }
         
@@ -185,13 +189,73 @@
             transform: none;
         }
         
+        .btn-manual-payment {
+            background: var(--gradient-dark);
+            border: none;
+            padding: 16px 20px;
+            border-radius: 12px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            transition: all 0.3s;
+            color: white;
+            box-shadow: 0 5px 15px rgba(86, 73, 192, 0.3);
+            width: 100%;
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+        
+        .btn-manual-payment:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(86, 73, 192, 0.4);
+            color: white;
+        }
+        
+        .btn-copy-till {
+            background: var(--success-gradient);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            color: white;
+            transition: all 0.3s;
+            margin-left: 10px;
+            flex-shrink: 0;
+        }
+        
+        .btn-copy-till:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 184, 148, 0.3);
+        }
+        
+        .btn-copy-small {
+            background: var(--primary);
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: 500;
+            color: white;
+            transition: all 0.3s;
+            margin-left: 10px;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .btn-copy-small:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 3px 10px rgba(108, 92, 231, 0.3);
+            background: var(--primary-dark);
+        }
+        
         .btn-outline-secondary {
             border: 2px solid var(--dark-light);
             color: var(--dark-light);
-            padding: 12px 25px;
+            padding: 12px 20px;
             border-radius: 10px;
             font-weight: 600;
             transition: all 0.3s;
+            font-size: 0.95rem;
         }
         
         .btn-outline-secondary:hover {
@@ -202,10 +266,11 @@
         
         .form-control {
             border-radius: 12px;
-            padding: 15px 20px;
+            padding: 14px 18px;
             border: 1px solid #e0e0e0;
             font-weight: 500;
             transition: all 0.3s;
+            font-size: 1rem;
         }
         
         .form-control:focus {
@@ -215,22 +280,25 @@
         
         .form-label {
             font-weight: 600;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             color: var(--dark);
+            font-size: 1rem;
         }
         
         .form-text {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--dark-light);
-            margin-top: 8px;
+            margin-top: 6px;
+            line-height: 1.4;
         }
         
         .alert {
             border-radius: 12px;
             border: none;
-            padding: 20px 25px;
+            padding: 18px 20px;
             font-weight: 500;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            font-size: 0.95rem;
         }
         
         .alert-danger {
@@ -260,15 +328,15 @@
         .premium-benefits {
             background: rgba(108, 92, 231, 0.05);
             border-radius: 15px;
-            padding: 25px;
-            margin: 25px 0;
+            padding: 20px;
+            margin: 20px 0;
             border: 1px solid rgba(108, 92, 231, 0.1);
         }
         
         .benefit-item {
             display: flex;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 14px;
         }
         
         .benefit-item:last-child {
@@ -276,28 +344,32 @@
         }
         
         .benefit-icon {
-            width: 40px;
-            height: 40px;
+            min-width: 38px;
+            width: 38px;
+            height: 38px;
             background: var(--gradient);
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            margin-right: 15px;
-            font-size: 1.1rem;
+            margin-right: 14px;
+            font-size: 1rem;
             box-shadow: 0 3px 10px rgba(108, 92, 231, 0.3);
+            flex-shrink: 0;
         }
         
         .benefit-text {
             font-weight: 500;
             color: var(--dark);
+            font-size: 0.95rem;
+            line-height: 1.4;
         }
         
         .section-title {
             font-weight: 700;
-            font-size: 1.4rem;
-            margin-bottom: 20px;
+            font-size: 1.25rem;
+            margin-bottom: 16px;
             color: var(--dark);
             position: relative;
             display: inline-block;
@@ -306,9 +378,9 @@
         .section-title:after {
             content: "";
             position: absolute;
-            bottom: -8px;
+            bottom: -6px;
             left: 0;
-            width: 40px;
+            width: 35px;
             height: 3px;
             background: var(--gradient);
             border-radius: 2px;
@@ -319,25 +391,27 @@
             align-items: center;
             background: white;
             border-radius: 12px;
-            padding: 5px;
             border: 1px solid #e0e0e0;
+            overflow: hidden;
         }
         
         .country-code {
-            padding: 10px 15px;
+            padding: 12px 15px;
             background: rgba(108, 92, 231, 0.1);
-            border-radius: 8px;
             font-weight: 600;
             color: var(--primary);
-            margin-right: 10px;
+            font-size: 1rem;
+            border-right: 1px solid #e0e0e0;
+            flex-shrink: 0;
         }
         
         .phone-input {
             flex: 1;
             border: none;
             outline: none;
-            padding: 10px;
+            padding: 12px 15px;
             font-size: 1rem;
+            min-width: 0;
         }
         
         .phone-input:focus {
@@ -352,8 +426,8 @@
         }
         
         .progress-step {
-            width: 30px;
-            height: 30px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             background: #e0e0e0;
             display: flex;
@@ -361,7 +435,8 @@
             justify-content: center;
             font-weight: 600;
             color: white;
-            margin: 0 10px;
+            font-size: 0.9rem;
+            flex-shrink: 0;
         }
         
         .progress-step.active {
@@ -374,7 +449,7 @@
         }
         
         .progress-line {
-            flex: 1;
+            flex: 0 1 40px;
             height: 3px;
             background: #e0e0e0;
             max-width: 50px;
@@ -395,52 +470,511 @@
             animation: mpesa-pulse 2s infinite;
         }
         
-        /* Responsive Adjustments */
+        /* Manual Payment Styles */
+        .manual-payment-card {
+            background: rgba(108, 92, 231, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid rgba(108, 92, 231, 0.1);
+        }
+        
+        .till-number-container {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 15px 0;
+            border: 2px dashed var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .till-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: 2px;
+            font-family: monospace;
+        }
+        
+        .till-number-small {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 1px;
+            font-family: monospace;
+        }
+        
+        .till-label {
+            font-weight: 600;
+            color: var(--dark);
+            margin-right: 10px;
+        }
+        
+        .manual-steps {
+            counter-reset: manual-step;
+            margin-bottom: 20px;
+        }
+        
+        .manual-steps li {
+            margin-bottom: 15px;
+            padding: 15px 15px 15px 55px;
+            position: relative;
+            background: rgba(108, 92, 231, 0.03);
+            border-radius: 10px;
+            border-left: 3px solid var(--primary);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .manual-steps li:before {
+            content: counter(manual-step);
+            counter-increment: manual-step;
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 28px;
+            height: 28px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        
+        .manual-steps li strong {
+            color: var(--primary);
+        }
+        
+        .step-till-container {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 5px;
+        }
+        
+        .amount-badge {
+            background: var(--success-gradient);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: inline-block;
+            margin: 5px 0;
+        }
+        
+        .payment-methods {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        /* Enhanced Responsive Styles */
         @media (max-width: 768px) {
-            .card-body {
-                padding: 30px 25px;
+            body {
+                align-items: flex-start;
+                padding: 15px 0;
+                background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) fixed;
+            }
+            
+            .container {
+                padding-left: 15px;
+                padding-right: 15px;
+                max-width: 100%;
+            }
+            
+            .activation-card {
+                border-radius: 16px;
+                margin: 0 auto;
+                width: 100%;
             }
             
             .card-header {
-                padding: 25px 20px;
+                padding: 22px 18px;
             }
             
             .card-header h3 {
+                font-size: 1.4rem;
+            }
+            
+            .card-header p {
+                font-size: 0.95rem;
+            }
+            
+            .card-body {
+                padding: 22px 18px;
+            }
+            
+            .btn-activate, .btn-manual-payment {
+                padding: 15px 18px;
+                font-size: 1rem;
+            }
+            
+            .premium-benefits {
+                padding: 18px;
+                margin: 18px 0;
+            }
+            
+            .benefit-item {
+                margin-bottom: 12px;
+            }
+            
+            .benefit-icon {
+                width: 36px;
+                height: 36px;
+                margin-right: 12px;
+            }
+            
+            .section-title {
+                font-size: 1.2rem;
+            }
+            
+            .payment-progress {
+                margin: 18px 0;
+            }
+            
+            .progress-step {
+                width: 30px;
+                height: 30px;
+                margin: 0 8px;
+            }
+            
+            .progress-line {
+                flex: 0 1 30px;
+            }
+            
+            .alert {
+                padding: 16px 18px;
+            }
+            
+            .alert .fa-2x {
                 font-size: 1.5rem;
+            }
+            
+            .till-number {
+                font-size: 1.6rem;
+                letter-spacing: 1px;
+            }
+            
+            .till-number-container {
+                padding: 12px;
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+            
+            .btn-copy-till {
+                margin-left: 0;
+                margin-top: 10px;
+                width: 100%;
+            }
+            
+            .manual-steps li {
+                padding: 15px 15px 15px 50px;
+                font-size: 0.9rem;
+            }
+            
+            .amount-badge {
+                font-size: 1rem;
+            }
+            
+            .step-till-container {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            
+            .btn-copy-small {
+                margin-left: 0;
+                align-self: flex-start;
             }
         }
         
         @media (max-width: 576px) {
             body {
-                padding: 20px 0;
+                padding: 12px 0;
+                align-items: flex-start;
+                min-height: 100vh;
+                display: block;
+            }
+            
+            .container {
+                padding: 0;
+            }
+            
+            .container > .row {
+                margin-left: 0;
+                margin-right: 0;
+            }
+            
+            .container > .row > .col-lg-8 {
+                padding: 0;
+            }
+            
+            .activation-card {
+                border-radius: 0;
+                box-shadow: none;
+                margin: 0;
+                width: 100%;
+                min-height: 100vh;
+            }
+            
+            .activation-card:hover {
+                transform: none;
+                box-shadow: none;
+            }
+            
+            .card-header {
+                padding: 25px 20px;
+                border-radius: 0;
+            }
+            
+            .card-header h3 {
+                font-size: 1.3rem;
+            }
+            
+            .card-header p {
+                font-size: 0.9rem;
             }
             
             .card-body {
                 padding: 25px 20px;
             }
             
-            .btn-activate {
-                padding: 14px 20px;
+            .btn-activate, .btn-manual-payment {
+                padding: 16px 20px;
                 font-size: 1rem;
+                border-radius: 10px;
+            }
+            
+            .btn-outline-secondary {
+                padding: 12px 18px;
+                font-size: 0.9rem;
             }
             
             .phone-input-container {
-                flex-direction: column;
+                flex-direction: row;
                 align-items: stretch;
             }
             
             .country-code {
+                padding: 12px 15px;
                 margin-right: 0;
+                border-right: 1px solid #e0e0e0;
+                font-size: 0.95rem;
+            }
+            
+            .phone-input {
+                padding: 12px 15px;
+                font-size: 1rem;
+            }
+            
+            .payment-steps li {
+                padding: 13px 15px 13px 48px;
+                font-size: 0.9rem;
+                margin-bottom: 12px;
+            }
+            
+            .payment-steps li:before {
+                width: 26px;
+                height: 26px;
+                font-size: 0.8rem;
+            }
+            
+            .benefit-item {
+                align-items: flex-start;
+            }
+            
+            .benefit-icon {
+                width: 34px;
+                height: 34px;
+                margin-top: 2px;
+            }
+            
+            .benefit-text {
+                font-size: 0.9rem;
+            }
+            
+            .section-title {
+                font-size: 1.15rem;
+            }
+            
+            .form-text {
+                font-size: 0.82rem;
+            }
+            
+            .payment-progress {
+                margin: 20px 0;
+            }
+            
+            .progress-step {
+                width: 28px;
+                height: 28px;
+                margin: 0 6px;
+            }
+            
+            .progress-line {
+                flex: 0 1 25px;
+            }
+            
+            .alert {
+                padding: 16px;
+            }
+            
+            .alert .d-flex .fa-2x {
+                font-size: 1.4rem;
+                margin-right: 12px;
+            }
+            
+            .text-center .btn {
+                width: 100%;
                 margin-bottom: 10px;
-                text-align: center;
+            }
+            
+            .text-center .btn:last-child {
+                margin-bottom: 0;
+            }
+            
+            .text-center .btn-outline-secondary {
+                margin-right: 0 !important;
+            }
+            
+            .border-top {
+                border-top: 1px solid rgba(0,0,0,0.1) !important;
+                padding-top: 20px;
+                margin-top: 20px;
+            }
+            
+            .till-number {
+                font-size: 1.5rem;
+                letter-spacing: 1px;
+            }
+            
+            .manual-payment-card {
+                padding: 18px;
+            }
+            
+            .manual-steps li {
+                padding: 12px 12px 12px 45px;
+                font-size: 0.85rem;
+                margin-bottom: 12px;
+            }
+            
+            .manual-steps li:before {
+                width: 25px;
+                height: 25px;
+                font-size: 0.85rem;
+            }
+            
+            .payment-methods {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .step-till-container {
+                margin-top: 8px;
+            }
+        }
+        
+        @media (max-width: 375px) {
+            .card-header {
+                padding: 22px 18px;
+            }
+            
+            .card-header h3 {
+                font-size: 1.2rem;
+            }
+            
+            .card-body {
+                padding: 22px 18px;
+            }
+            
+            .premium-benefits {
+                padding: 16px;
+            }
+            
+            .benefit-icon {
+                width: 32px;
+                height: 32px;
+                margin-right: 10px;
+                font-size: 0.9rem;
+            }
+            
+            .benefit-text {
+                font-size: 0.85rem;
+            }
+            
+            .payment-progress {
+                margin: 15px 0;
+            }
+            
+            .progress-step {
+                width: 26px;
+                height: 26px;
+                margin: 0 4px;
+                font-size: 0.8rem;
+            }
+            
+            .progress-line {
+                flex: 0 1 20px;
+            }
+            
+            .till-number {
+                font-size: 1.3rem;
+            }
+            
+            .manual-payment-card {
+                padding: 16px;
+            }
+            
+            .manual-steps li {
+                padding: 10px 10px 10px 40px;
+                font-size: 0.8rem;
+            }
+        }
+        
+        /* Safe area insets for modern mobile devices */
+        @supports (padding: max(0px)) {
+            body {
+                padding-left: max(12px, env(safe-area-inset-left));
+                padding-right: max(12px, env(safe-area-inset-right));
+                padding-top: max(12px, env(safe-area-inset-top));
+                padding-bottom: max(12px, env(safe-area-inset-bottom));
+            }
+        }
+        
+        /* Improve touch targets */
+        button, 
+        .btn, 
+        .btn-activate,
+        .btn-manual-payment,
+        input[type="tel"] {
+            min-height: 44px;
+        }
+        
+        /* Prevent zoom on input focus for iOS */
+        @media screen and (max-width: 768px) {
+            input, 
+            select, 
+            textarea {
+                font-size: 16px !important;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container py-4">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
+    <div class="container py-0 py-md-3">
+        <div class="row justify-content-center mx-0">
+            <div class="col-12 col-lg-8 px-0">
                 <div class="activation-card animate__animated animate__fadeInUp">
                     <!-- Header -->
                     <div class="card-header">
@@ -488,9 +1022,29 @@
                             <div class="progress-step" id="step3">3</div>
                         </div>
 
-                        <!-- Step 1: Enter Phone Number -->
+                        <!-- Step 1: Choose Payment Method -->
+                        <div id="paymentMethodSelection">
+                            <h5 class="section-title">Choose Payment Method</h5>
+                            <p class="mb-4">Select how you want to pay Ksh 79 for premium activation</p>
+                            
+                            <div class="payment-methods">
+                                <button id="automaticPaymentBtn" class="btn btn-activate">
+                                    <i class="fas fa-mobile-alt me-2"></i>Automatic M-Pesa
+                                </button>
+                                <button id="manualPaymentBtn" class="btn btn-manual-payment">
+                                    <i class="fas fa-hand-holding-usd me-2"></i>Manual M-Pesa
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Step 1a: Automatic Payment - Enter Phone Number -->
                         <div id="phoneForm">
-                            <h5 class="section-title">Enter Your Phone Number</h5>
+                            <div class="d-flex align-items-center mb-3">
+                                <button id="backToPaymentMethods" class="btn btn-sm btn-outline-secondary me-3">
+                                    <i class="fas fa-arrow-left"></i>
+                                </button>
+                                <h5 class="section-title mb-0">Enter Your Phone Number</h5>
+                            </div>
                             <p class="mb-4">We'll send an M-Pesa payment request to your phone</p>
                             
                             <div class="mb-4">
@@ -514,6 +1068,65 @@
                             <button id="initiatePaymentBtn" class="btn btn-activate">
                                 <i class="fas fa-mobile-alt me-2"></i>Pay Ksh 79 via M-Pesa
                             </button>
+                        </div>
+
+                        <!-- Step 1b: Manual Payment Instructions -->
+                        <div id="manualPaymentSection">
+                            <div class="d-flex align-items-center mb-3">
+                                <button id="backToPaymentMethods2" class="btn btn-sm btn-outline-secondary me-3">
+                                    <i class="fas fa-arrow-left"></i>
+                                </button>
+                                <h5 class="section-title mb-0">Manual M-Pesa Payment</h5>
+                            </div>
+                            <p class="mb-4">Follow these steps to send payment to our Till Number</p>
+                            
+                            <div class="manual-payment-card">
+                                <!-- Till Number Display -->
+                                <div class="till-number-container">
+                                    <div>
+                                        <span class="till-label">Till Number:</span>
+                                        <span class="till-number" id="tillNumber">6957778</span>
+                                    </div>
+                                    <button class="btn btn-copy-till" onclick="copyTillNumber('tillNumber')">
+                                        <i class="fas fa-copy me-2"></i>Copy Till Number
+                                    </button>
+                                </div>
+                                
+                                <!-- Amount -->
+                                <div class="text-center mb-4">
+                                    <div class="amount-badge">Amount: Ksh 79</div>
+                                </div>
+                                
+                                <!-- Payment Steps -->
+                                <ol class="manual-steps">
+                                    <li>Open your <strong>M-Pesa menu</strong> on your phone</li>
+                                    <li>Select <strong>"Lipa na M-Pesa"</strong></li>
+                                    <li>Select <strong>"Pay Bill"</strong></li>
+                                    <li>Enter <strong>Till Number:</strong> 
+                                        <div class="step-till-container">
+                                            <span class="till-number-small">6957778</span>
+                                            <button class="btn btn-copy-small" onclick="copyTillNumber('stepTillNumber')">
+                                                <i class="fas fa-copy"></i> Copy
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li>Enter <strong>Account Number:</strong> Your phone number starting with 254 (e.g., 254712345678)</li>
+                                    <li>Enter <strong>Amount:</strong> <span class="amount-badge" style="font-size: 0.9rem;">Ksh 79</span></li>
+                                    <li>Enter your <strong>M-Pesa PIN</strong> and press OK</li>
+                                    <li>Wait for confirmation SMS</li>
+                                </ol>
+                                
+                                <div class="alert alert-info">
+                                    <i class="fas fa-info-circle me-2"></i>
+                                    After payment, click the button below to verify your payment
+                                </div>
+                                
+                                <div class="text-center mt-4">
+                                    <button id="verifyManualPaymentBtn" class="btn btn-activate">
+                                        <i class="fas fa-check-circle me-2"></i>I've Made the Payment
+                                    </button>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Step 2: Payment Pending -->
@@ -544,12 +1157,14 @@
                                 </div>
                                 <p class="mt-2 mb-3">Verifying your payment...</p>
                                 
-                                <button id="cancelPaymentBtn" class="btn btn-outline-secondary me-2">
-                                    <i class="fas fa-times me-1"></i>Cancel
-                                </button>
-                                <button id="checkStatusBtn" class="btn btn-activate">
-                                    <i class="fas fa-sync-alt me-1"></i>Check Status
-                                </button>
+                                <div class="d-grid gap-2">
+                                    <button id="cancelPaymentBtn" class="btn btn-outline-secondary">
+                                        <i class="fas fa-times me-1"></i>Cancel
+                                    </button>
+                                    <button id="checkStatusBtn" class="btn btn-activate">
+                                        <i class="fas fa-sync-alt me-1"></i>Check Status
+                                    </button>
+                                </div>
                             </div>
                         </div>
 
@@ -614,11 +1229,29 @@
         // Variables to track payment state
         let currentCheckoutRequestId = null;
         let statusCheckInterval = null;
+        let currentPaymentMethod = null; // 'automatic' or 'manual'
         
         // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
-            // Check if user is already premium
-            checkUserPremiumStatus();
+            // Show payment method selection by default
+            showPaymentMethodSelection();
+            
+            // Payment method buttons
+            document.getElementById('automaticPaymentBtn').addEventListener('click', function() {
+                currentPaymentMethod = 'automatic';
+                document.getElementById('paymentMethodSelection').style.display = 'none';
+                document.getElementById('phoneForm').style.display = 'block';
+            });
+            
+            document.getElementById('manualPaymentBtn').addEventListener('click', function() {
+                currentPaymentMethod = 'manual';
+                document.getElementById('paymentMethodSelection').style.display = 'none';
+                document.getElementById('manualPaymentSection').style.display = 'block';
+            });
+            
+            // Back buttons
+            document.getElementById('backToPaymentMethods').addEventListener('click', showPaymentMethodSelection);
+            document.getElementById('backToPaymentMethods2').addEventListener('click', showPaymentMethodSelection);
             
             // Phone number validation
             document.getElementById('phoneNumber').addEventListener('input', function(e) {
@@ -634,21 +1267,137 @@
             // Initiate payment button
             document.getElementById('initiatePaymentBtn').addEventListener('click', initiatePayment);
             
+            // Verify manual payment button
+            document.getElementById('verifyManualPaymentBtn').addEventListener('click', verifyManualPayment);
+            
             // Check status button
             document.getElementById('checkStatusBtn').addEventListener('click', checkPaymentStatus);
             
             // Cancel payment button
             document.getElementById('cancelPaymentBtn').addEventListener('click', cancelPayment);
+            
+            // Prevent zoom on input focus for iOS
+            document.querySelectorAll('input, select, textarea').forEach(element => {
+                element.addEventListener('focus', () => {
+                    if (window.innerWidth <= 768) {
+                        document.body.style.zoom = "100%";
+                    }
+                });
+            });
         });
         
-        // Check if user is already premium
-        function checkUserPremiumStatus() {
-            // You could make an API call here to check user status
-            // For now, we'll just show the phone form by default
-            document.getElementById('phoneForm').style.display = 'block';
+        // Copy till number to clipboard
+        function copyTillNumber(elementId) {
+            let tillNumber;
+            
+            if (elementId === 'tillNumber') {
+                tillNumber = document.getElementById('tillNumber').textContent;
+            } else if (elementId === 'stepTillNumber') {
+                // Get the till number from the step
+                const stepContainer = document.querySelector('.step-till-container');
+                tillNumber = stepContainer.querySelector('.till-number-small').textContent;
+            } else {
+                tillNumber = '6957778';
+            }
+            
+            navigator.clipboard.writeText(tillNumber).then(() => {
+                // Show success feedback
+                const button = event.target.closest('button');
+                const originalHtml = button.innerHTML;
+                
+                if (button.classList.contains('btn-copy-till')) {
+                    button.innerHTML = '<i class="fas fa-check me-2"></i>Copied!';
+                    button.classList.add('btn-success');
+                    button.classList.remove('btn-copy-till');
+                    
+                    setTimeout(() => {
+                        button.innerHTML = originalHtml;
+                        button.classList.remove('btn-success');
+                        button.classList.add('btn-copy-till');
+                    }, 2000);
+                } else if (button.classList.contains('btn-copy-small')) {
+                    button.innerHTML = '<i class="fas fa-check"></i> Copied';
+                    button.classList.add('btn-success');
+                    
+                    setTimeout(() => {
+                        button.innerHTML = originalHtml;
+                        button.classList.remove('btn-success');
+                    }, 2000);
+                }
+                
+                // Show toast notification
+                showToast('Till number copied to clipboard: ' + tillNumber);
+                
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                showError('Failed to copy till number. Please copy it manually: ' + tillNumber);
+            });
         }
         
-        // Initiate M-Pesa payment
+        // Show toast notification
+        function showToast(message) {
+            // Create toast element
+            const toast = document.createElement('div');
+            toast.className = 'toast-notification animate__animated animate__fadeInUp';
+            toast.innerHTML = `
+                <div class="toast-content">
+                    <i class="fas fa-check-circle me-2"></i>
+                    ${message}
+                </div>
+            `;
+            
+            // Add styles for toast
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: var(--success-gradient);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                z-index: 1000;
+                font-weight: 500;
+                max-width: 90%;
+                text-align: center;
+                animation-duration: 0.3s;
+            `;
+            
+            document.body.appendChild(toast);
+            
+            // Remove toast after 3 seconds
+            setTimeout(() => {
+                toast.classList.add('animate__fadeOutDown');
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        document.body.removeChild(toast);
+                    }
+                }, 300);
+            }, 3000);
+        }
+        
+        // Show payment method selection
+        function showPaymentMethodSelection() {
+            document.getElementById('paymentMethodSelection').style.display = 'block';
+            document.getElementById('phoneForm').style.display = 'none';
+            document.getElementById('manualPaymentSection').style.display = 'none';
+            document.getElementById('paymentPending').style.display = 'none';
+            document.getElementById('errorMessage').classList.add('d-none');
+            
+            // Reset progress
+            updateProgress(1);
+            
+            // Clear any intervals
+            if (statusCheckInterval) {
+                clearInterval(statusCheckInterval);
+                statusCheckInterval = null;
+            }
+            
+            currentPaymentMethod = null;
+        }
+        
+        // Initiate M-Pesa payment (automatic)
         function initiatePayment() {
             const phoneInput = document.getElementById('phoneNumber');
             const phoneNumber = phoneInput.value;
@@ -702,6 +1451,75 @@
                 } else {
                     // Show error
                     showError(data.message || 'Failed to initiate payment. Please try again.');
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showError('Network error. Please check your connection and try again.');
+                button.innerHTML = originalText;
+                button.disabled = false;
+            });
+        }
+        
+        // Verify manual payment
+        function verifyManualPayment() {
+            // Show loading state
+            const button = document.getElementById('verifyManualPaymentBtn');
+            const originalText = button.innerHTML;
+            button.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Verifying payment...';
+            button.disabled = true;
+            
+            // Hide any previous errors
+            hideError();
+            
+            // For manual payment, we need to check if payment was made
+            // This would typically involve sending a request to your backend
+            // to check if a payment with the user's phone number was received
+            
+            // Show prompt for phone number
+            const phoneNumber = prompt("Please enter your Safaricom phone number (7XXXXXXXX) that you used to make the payment:");
+            
+            if (!phoneNumber || phoneNumber.length !== 9 || !phoneNumber.startsWith('7')) {
+                showError('Please enter a valid Safaricom phone number (7XXXXXXXX)');
+                button.innerHTML = originalText;
+                button.disabled = false;
+                return;
+            }
+            
+            const fullPhoneNumber = '254' + phoneNumber;
+            
+            // Send verification request to backend
+            fetch('/auth/verify-manual-payment/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({
+                    phone_number: fullPhoneNumber,
+                    amount: 79,
+                    till_number: '6957778'
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    if (data.payment_found) {
+                        // Payment found and verified
+                        paymentSuccess();
+                    } else {
+                        // Payment not found yet
+                        showError('Payment not found yet. Please wait a few minutes and try again, or ensure you entered the correct phone number.');
+                        button.innerHTML = originalText;
+                        button.disabled = false;
+                        
+                        // Optionally, start checking status
+                        // startManualStatusChecking(fullPhoneNumber);
+                    }
+                } else {
+                    showError(data.message || 'Failed to verify payment. Please try again later.');
                     button.innerHTML = originalText;
                     button.disabled = false;
                 }
@@ -771,6 +1589,7 @@
             
             // Show success message
             document.getElementById('paymentPending').style.display = 'none';
+            document.getElementById('manualPaymentSection').style.display = 'none';
             document.getElementById('successMessage').classList.remove('d-none');
             document.getElementById('successMessage').classList.add('animate__animated', 'animate__pulse');
             
@@ -791,8 +1610,8 @@
             // Show error and allow retry
             showError('Payment failed. Please try again or use a different payment method.');
             
-            // Reset to step 1
-            resetToPhoneForm();
+            // Reset to payment method selection
+            showPaymentMethodSelection();
         }
         
         // Cancel payment
@@ -803,29 +1622,11 @@
                 statusCheckInterval = null;
             }
             
-            // Reset to phone form
-            resetToPhoneForm();
+            // Reset to payment method selection
+            showPaymentMethodSelection();
             
             // Show message
             showError('Payment cancelled. You can try again anytime.');
-        }
-        
-        // Reset to phone form
-        function resetToPhoneForm() {
-            // Reset progress
-            updateProgress(1);
-            
-            // Show phone form
-            document.getElementById('paymentPending').style.display = 'none';
-            document.getElementById('phoneForm').style.display = 'block';
-            
-            // Reset button state
-            const button = document.getElementById('initiatePaymentBtn');
-            button.innerHTML = '<i class="fas fa-mobile-alt me-2"></i>Pay Ksh 79 via M-Pesa';
-            button.disabled = false;
-            
-            // Clear checkout request ID
-            currentCheckoutRequestId = null;
         }
         
         // Update progress steps
