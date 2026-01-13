@@ -150,64 +150,8 @@
             counter-reset: step;
         }
         
-        #paymentForm, #successMessage, #pendingMessage { 
+        #phoneForm, #paymentPending, #successMessage, #errorMessage { 
             display: none; 
-        }
-        
-        .till-number-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: rgba(108, 92, 231, 0.1);
-            padding: 18px 20px;
-            border-radius: 12px;
-            margin: 15px 0;
-            border: 1px solid rgba(108, 92, 231, 0.2);
-        }
-        
-        .till-number {
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: var(--primary);
-            letter-spacing: 1px;
-        }
-        
-        .copy-btn {
-            padding: 8px 20px;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: all 0.3s;
-            border: 2px solid var(--primary);
-            background: transparent;
-            color: var(--primary);
-        }
-        
-        .copy-btn:hover {
-            background: var(--primary);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
-        }
-        
-        .copy-btn.copied {
-            background: var(--success);
-            border-color: var(--success);
-            color: white;
-        }
-        
-        .character-count {
-            font-size: 0.85rem;
-            text-align: right;
-            margin-top: 8px;
-            font-weight: 500;
-        }
-        
-        .character-count.valid {
-            color: var(--success);
-        }
-        
-        .character-count.invalid {
-            color: var(--danger);
         }
         
         .btn-activate {
@@ -233,6 +177,12 @@
         
         .btn-activate:active {
             transform: translateY(-2px);
+        }
+        
+        .btn-activate:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
         }
         
         .btn-outline-secondary {
@@ -301,6 +251,12 @@
             border-left: 4px solid var(--success);
         }
         
+        .alert-info {
+            background: rgba(108, 92, 231, 0.1);
+            color: #0c5460;
+            border-left: 4px solid var(--primary);
+        }
+        
         .premium-benefits {
             background: rgba(108, 92, 231, 0.05);
             border-radius: 15px;
@@ -358,6 +314,87 @@
             border-radius: 2px;
         }
         
+        .phone-input-container {
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 12px;
+            padding: 5px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .country-code {
+            padding: 10px 15px;
+            background: rgba(108, 92, 231, 0.1);
+            border-radius: 8px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-right: 10px;
+        }
+        
+        .phone-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 10px;
+            font-size: 1rem;
+        }
+        
+        .phone-input:focus {
+            box-shadow: none;
+        }
+        
+        .payment-progress {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        .progress-step {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+            margin: 0 10px;
+        }
+        
+        .progress-step.active {
+            background: var(--primary);
+            box-shadow: 0 0 0 5px rgba(108, 92, 231, 0.2);
+        }
+        
+        .progress-step.completed {
+            background: var(--success);
+        }
+        
+        .progress-line {
+            flex: 1;
+            height: 3px;
+            background: #e0e0e0;
+            max-width: 50px;
+        }
+        
+        .progress-line.completed {
+            background: var(--success);
+        }
+        
+        /* M-Pesa Animation */
+        @keyframes mpesa-pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .mpesa-animation {
+            animation: mpesa-pulse 2s infinite;
+        }
+        
         /* Responsive Adjustments */
         @media (max-width: 768px) {
             .card-body {
@@ -370,16 +407,6 @@
             
             .card-header h3 {
                 font-size: 1.5rem;
-            }
-            
-            .till-number-container {
-                flex-direction: column;
-                gap: 15px;
-                text-align: center;
-            }
-            
-            .payment-steps li {
-                padding: 15px 15px 15px 50px;
             }
         }
         
@@ -395,6 +422,17 @@
             .btn-activate {
                 padding: 14px 20px;
                 font-size: 1rem;
+            }
+            
+            .phone-input-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .country-code {
+                margin-right: 0;
+                margin-bottom: 10px;
+                text-align: center;
             }
         }
     </style>
@@ -441,69 +479,84 @@
                             </div>
                         </div>
 
-                        <!-- Step 1: Payment Instructions -->
-                        <div id="paymentInstructions">
-                            <h5 class="section-title">Payment Instructions</h5>
-                            <ol class="payment-steps">
-                                <li>Go to <strong>M-Pesa</strong> on your phone</li>
-                                <li>Select <strong>Lipa Na M-Pesa > Buy Goods and Services</strong></li>
-                                <li>
-                                    <div>Enter Till Number:</div>
-                                    <div class="till-number-container">
-                                        <span class="till-number" id="tillNumber">6957778</span>
-                                        <button type="button" class="btn copy-btn" id="copyTillBtn">
-                                            <i class="fas fa-copy me-1"></i>Copy Till Number
-                                        </button>
-                                    </div>
-                                </li>
-                                <li>Enter Amount: <strong>Ksh 79</strong></li>
-                                <li>Enter your <strong>M-Pesa PIN</strong> and confirm</li>
-                            </ol>
-                            <button id="iHavePaidBtn" class="btn btn-activate">
-                                <i class="fas fa-check-circle me-2"></i>I Have Paid - Continue to Verification
-                            </button>
+                        <!-- Progress Steps -->
+                        <div class="payment-progress">
+                            <div class="progress-step active" id="step1">1</div>
+                            <div class="progress-line" id="line1"></div>
+                            <div class="progress-step" id="step2">2</div>
+                            <div class="progress-line" id="line2"></div>
+                            <div class="progress-step" id="step3">3</div>
                         </div>
 
-                        <!-- Step 2: Transaction Verification Form -->
-                        <form id="paymentForm">
-                            <h5 class="section-title">Verify Your Payment</h5>
+                        <!-- Step 1: Enter Phone Number -->
+                        <div id="phoneForm">
+                            <h5 class="section-title">Enter Your Phone Number</h5>
+                            <p class="mb-4">We'll send an M-Pesa payment request to your phone</p>
+                            
                             <div class="mb-4">
-                                <label class="form-label">Paste M-Pesa Transaction Message</label>
-                                <textarea class="form-control" id="transactionMessage" rows="5" 
-                                          placeholder="Example: 
-'You have received Ksh79 from Felix Kamau (254712345678). 
-New M-PESA balance is Ksh5,200. Transaction: ABC123XYZ'
-                                          
-Paste the complete message you received from M-Pesa..." 
-                                          required></textarea>
-                                <div class="character-count" id="characterCount">
-                                    <span id="charCount">0</span>/200 characters
+                                <label class="form-label">M-Pesa Registered Phone Number</label>
+                                <div class="phone-input-container">
+                                    <div class="country-code">+254</div>
+                                    <input type="tel" 
+                                           class="phone-input" 
+                                           id="phoneNumber" 
+                                           placeholder="7XXXXXXXX" 
+                                           pattern="[7][0-9]{8}"
+                                           maxlength="9"
+                                           required>
                                 </div>
                                 <div class="form-text">
                                     <i class="fas fa-info-circle me-1"></i>
-                                    Copy and paste the complete M-Pesa message (usually 200-230 characters)
+                                    Enter your Safaricom number without the country code (e.g., 712345678)
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-activate" id="submitBtn">
-                                <i class="fas fa-paper-plane me-2"></i>Submit for Verification
+                            
+                            <button id="initiatePaymentBtn" class="btn btn-activate">
+                                <i class="fas fa-mobile-alt me-2"></i>Pay Ksh 79 via M-Pesa
                             </button>
-                        </form>
-
-                        <!-- Error Message -->
-                        <div id="errorAlert" class="alert alert-danger mt-4 d-none animate__animated">
-                            <i class="fas fa-times-circle me-2"></i>
-                            <strong>Wrong Transaction!</strong> Please check and paste the correct M-Pesa message.
                         </div>
 
-                        <!-- Pending Message -->
-                        <div id="pendingMessage" class="alert alert-warning mt-4 d-none">
-                            <div class="d-flex align-items-center">
-                                <i class="fas fa-clock fa-2x me-3"></i>
-                                <div>
-                                    <h6 class="mb-1"><strong>Activation Pending!</strong></h6>
-                                    <p class="mb-0">We're verifying your payment. You'll receive notification shortly.</p>
+                        <!-- Step 2: Payment Pending -->
+                        <div id="paymentPending">
+                            <h5 class="section-title">Complete Payment on Your Phone</h5>
+                            
+                            <div class="alert alert-info">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-mobile-alt fa-2x me-3 mpesa-animation"></i>
+                                    <div>
+                                        <h6 class="mb-1"><strong>Check your phone!</strong></h6>
+                                        <p class="mb-0">An M-Pesa STK Push request has been sent to your phone. 
+                                        Please enter your M-Pesa PIN to complete the payment.</p>
+                                    </div>
                                 </div>
                             </div>
+                            
+                            <div class="payment-steps">
+                                <li>Check your phone for M-Pesa prompt</li>
+                                <li>Enter your <strong>M-Pesa PIN</strong> to authorize payment</li>
+                                <li>Wait for confirmation message</li>
+                                <li>Premium will activate automatically</li>
+                            </div>
+                            
+                            <div class="text-center mt-4">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Verifying payment...</span>
+                                </div>
+                                <p class="mt-2 mb-3">Verifying your payment...</p>
+                                
+                                <button id="cancelPaymentBtn" class="btn btn-outline-secondary me-2">
+                                    <i class="fas fa-times me-1"></i>Cancel
+                                </button>
+                                <button id="checkStatusBtn" class="btn btn-activate">
+                                    <i class="fas fa-sync-alt me-1"></i>Check Status
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Error Message -->
+                        <div id="errorMessage" class="alert alert-danger mt-4 d-none animate__animated">
+                            <i class="fas fa-times-circle me-2"></i>
+                            <span id="errorText"></span>
                         </div>
 
                         <!-- Success Message -->
@@ -511,8 +564,19 @@ Paste the complete message you received from M-Pesa..."
                             <div class="d-flex align-items-center">
                                 <i class="fas fa-check-circle fa-2x me-3"></i>
                                 <div>
-                                    <h6 class="mb-1"><strong>Payment Verified Successfully!</strong></h6>
-                                    <p class="mb-0">Your premium account is now active. Redirecting to dashboard...</p>
+                                    <h6 class="mb-1"><strong>Premium Activated Successfully!</strong></h6>
+                                    <p class="mb-0">Ksh 500 bonus has been credited to your account. Redirecting to dashboard...</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Already Premium Message -->
+                        <div id="alreadyPremium" class="alert alert-warning mt-4 d-none">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-crown fa-2x me-3"></i>
+                                <div>
+                                    <h6 class="mb-1"><strong>You're Already Premium!</strong></h6>
+                                    <p class="mb-0">Your premium membership is already active. Enjoy all premium benefits!</p>
                                 </div>
                             </div>
                         </div>
@@ -531,150 +595,7 @@ Paste the complete message you received from M-Pesa..."
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Show payment form after clicking "I Have Paid"
-        document.getElementById("iHavePaidBtn").addEventListener("click", function() {
-            document.getElementById("paymentInstructions").style.display = "none";
-            document.getElementById("paymentForm").style.display = "block";
-            
-            // Add animation to form
-            document.getElementById("paymentForm").classList.add("animate__animated", "animate__fadeIn");
-        });
-
-        // Copy Till Number to Clipboard
-        document.getElementById("copyTillBtn").addEventListener("click", function() {
-            const tillNumber = document.getElementById("tillNumber").textContent;
-            
-            navigator.clipboard.writeText(tillNumber).then(() => {
-                // Change button to show success
-                const originalText = this.innerHTML;
-                this.innerHTML = '<i class="fas fa-check me-1"></i>Copied!';
-                this.classList.add("copied");
-                
-                // Revert back after 2 seconds
-                setTimeout(() => {
-                    this.innerHTML = originalText;
-                    this.classList.remove("copied");
-                }, 2000);
-                
-            }).catch(err => {
-                console.error('Failed to copy: ', err);
-                alert("Failed to copy till number. Please copy manually: " + tillNumber);
-            });
-        });
-
-        // Character count and validation
-        document.getElementById("transactionMessage").addEventListener("input", function() {
-            const charCount = this.value.length;
-            const countElement = document.getElementById("charCount");
-            const characterCount = document.getElementById("characterCount");
-            
-            countElement.textContent = charCount;
-            
-            // Update character count style
-            if (charCount >= 200 && charCount <= 230) {
-                characterCount.classList.add("valid");
-                characterCount.classList.remove("invalid");
-            } else {
-                characterCount.classList.add("invalid");
-                characterCount.classList.remove("valid");
-            }
-        });
-
-        // Handle form submission
-        document.getElementById("paymentForm").addEventListener("submit", function(e) {
-            e.preventDefault();
-            
-            const transactionMessage = document.getElementById("transactionMessage").value;
-            const charCount = transactionMessage.length;
-            const submitBtn = document.getElementById("submitBtn");
-            const originalText = submitBtn.innerHTML;
-            
-            // Show loading state
-            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Verifying Payment...';
-            submitBtn.disabled = true;
-            
-            // Hide previous messages
-            document.getElementById("errorAlert").classList.add("d-none");
-            document.getElementById("pendingMessage").classList.add("d-none");
-            document.getElementById("successMessage").classList.add("d-none");
-            
-            // Simulate API call delay
-            setTimeout(() => {
-                // Validate message length (200-230 characters typical for M-Pesa messages)
-                if (charCount >= 200 && charCount <= 230) {
-                    // Valid M-Pesa message length - show pending message
-                    document.getElementById("pendingMessage").classList.remove("d-none");
-                    document.getElementById("paymentForm").style.display = "none";
-                    
-                    // In a real scenario, you would send this to your Django backend
-                    // For now, we'll simulate a successful activation after delay
-                    setTimeout(() => {
-                        // Send activation request to Django
-                        fetch('/auth/activate-premium/', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRFToken': getCookie('csrftoken')
-                            },
-                            body: JSON.stringify({ 
-                                action: 'activate_premium',
-                                transaction_message: transactionMessage 
-                            })
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                document.getElementById("pendingMessage").classList.add("d-none");
-                                document.getElementById("successMessage").classList.remove("d-none");
-                                
-                                // Add celebration animation
-                                document.getElementById("successMessage").classList.add("animate__animated", "animate__pulse");
-                                
-                                // Redirect to dashboard after 3 seconds
-                                setTimeout(() => {
-                                    window.location.href = "/auth/dashboard/";
-                                }, 3000);
-                            } else {
-                                // If backend verification fails
-                                document.getElementById("pendingMessage").classList.add("d-none");
-                                document.getElementById("errorAlert").classList.remove("d-none");
-                                document.getElementById("paymentForm").style.display = "block";
-                                submitBtn.innerHTML = originalText;
-                                submitBtn.disabled = false;
-                                
-                                // Add shake animation to error alert
-                                document.getElementById("errorAlert").classList.add("animate__animated", "animate__shakeX");
-                                setTimeout(() => {
-                                    document.getElementById("errorAlert").classList.remove("animate__animated", "animate__shakeX");
-                                }, 1000);
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                            document.getElementById("pendingMessage").classList.add("d-none");
-                            document.getElementById("errorAlert").classList.remove("d-none");
-                            document.getElementById("paymentForm").style.display = "block";
-                            submitBtn.innerHTML = originalText;
-                            submitBtn.disabled = false;
-                        });
-                    }, 2000);
-                    
-                } else {
-                    // Invalid message length
-                    document.getElementById("errorAlert").classList.remove("d-none");
-                    submitBtn.innerHTML = originalText;
-                    submitBtn.disabled = false;
-                    
-                    // Add shake animation to error alert
-                    document.getElementById("errorAlert").classList.add("animate__animated", "animate__shakeX");
-                    setTimeout(() => {
-                        document.getElementById("errorAlert").classList.remove("animate__animated", "animate__shakeX");
-                    }, 1000);
-                }
-            }, 1500);
-        });
-
-        // Helper function to get CSRF token
+        // CSRF Token helper
         function getCookie(name) {
             let cookieValue = null;
             if (document.cookie && document.cookie !== '') {
@@ -689,12 +610,270 @@ Paste the complete message you received from M-Pesa..."
             }
             return cookieValue;
         }
+
+        // Variables to track payment state
+        let currentCheckoutRequestId = null;
+        let statusCheckInterval = null;
         
-        // Add animation to card on load
+        // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
-            const card = document.querySelector('.activation-card');
-            card.classList.add('animate__animated', 'animate__fadeInUp');
+            // Check if user is already premium
+            checkUserPremiumStatus();
+            
+            // Phone number validation
+            document.getElementById('phoneNumber').addEventListener('input', function(e) {
+                // Only allow numbers
+                this.value = this.value.replace(/[^0-9]/g, '');
+                
+                // Ensure it starts with 7
+                if (this.value.length > 0 && !this.value.startsWith('7')) {
+                    this.value = '7' + this.value.slice(1);
+                }
+            });
+            
+            // Initiate payment button
+            document.getElementById('initiatePaymentBtn').addEventListener('click', initiatePayment);
+            
+            // Check status button
+            document.getElementById('checkStatusBtn').addEventListener('click', checkPaymentStatus);
+            
+            // Cancel payment button
+            document.getElementById('cancelPaymentBtn').addEventListener('click', cancelPayment);
         });
+        
+        // Check if user is already premium
+        function checkUserPremiumStatus() {
+            // You could make an API call here to check user status
+            // For now, we'll just show the phone form by default
+            document.getElementById('phoneForm').style.display = 'block';
+        }
+        
+        // Initiate M-Pesa payment
+        function initiatePayment() {
+            const phoneInput = document.getElementById('phoneNumber');
+            const phoneNumber = phoneInput.value;
+            
+            // Validate phone number
+            if (!phoneNumber || phoneNumber.length !== 9 || !phoneNumber.startsWith('7')) {
+                showError('Please enter a valid Safaricom phone number (7XXXXXXXX)');
+                phoneInput.focus();
+                return;
+            }
+            
+            // Show loading state
+            const button = document.getElementById('initiatePaymentBtn');
+            const originalText = button.innerHTML;
+            button.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Initiating payment...';
+            button.disabled = true;
+            
+            // Hide any previous errors
+            hideError();
+            
+            // Prepare the full phone number (254XXXXXXXXX)
+            const fullPhoneNumber = '254' + phoneNumber;
+            
+            // Send request to backend
+            fetch('/auth/initiate-premium-payment/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({
+                    phone_number: fullPhoneNumber
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Payment initiated successfully
+                    currentCheckoutRequestId = data.checkout_request_id;
+                    
+                    // Move to step 2
+                    updateProgress(2);
+                    
+                    // Show payment pending screen
+                    document.getElementById('phoneForm').style.display = 'none';
+                    document.getElementById('paymentPending').style.display = 'block';
+                    
+                    // Start checking payment status
+                    startStatusChecking();
+                    
+                } else {
+                    // Show error
+                    showError(data.message || 'Failed to initiate payment. Please try again.');
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showError('Network error. Please check your connection and try again.');
+                button.innerHTML = originalText;
+                button.disabled = false;
+            });
+        }
+        
+        // Start checking payment status periodically
+        function startStatusChecking() {
+            // Check immediately
+            checkPaymentStatus();
+            
+            // Then check every 5 seconds
+            statusCheckInterval = setInterval(checkPaymentStatus, 5000);
+        }
+        
+        // Check payment status
+        function checkPaymentStatus() {
+            if (!currentCheckoutRequestId) return;
+            
+            fetch('/auth/check-payment-status/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({
+                    checkout_request_id: currentCheckoutRequestId
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    if (data.status === 'COMPLETED' || data.premium_active) {
+                        // Payment completed successfully
+                        paymentSuccess();
+                    } else if (data.status === 'FAILED') {
+                        // Payment failed
+                        paymentFailed();
+                    }
+                    // If still pending, do nothing - continue checking
+                } else {
+                    // Error checking status
+                    console.error('Status check error:', data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Status check error:', error);
+            });
+        }
+        
+        // Payment successful
+        function paymentSuccess() {
+            // Clear interval
+            if (statusCheckInterval) {
+                clearInterval(statusCheckInterval);
+                statusCheckInterval = null;
+            }
+            
+            // Update progress
+            updateProgress(3);
+            
+            // Show success message
+            document.getElementById('paymentPending').style.display = 'none';
+            document.getElementById('successMessage').classList.remove('d-none');
+            document.getElementById('successMessage').classList.add('animate__animated', 'animate__pulse');
+            
+            // Redirect to dashboard after 3 seconds
+            setTimeout(() => {
+                window.location.href = '/auth/dashboard/';
+            }, 3000);
+        }
+        
+        // Payment failed
+        function paymentFailed() {
+            // Clear interval
+            if (statusCheckInterval) {
+                clearInterval(statusCheckInterval);
+                statusCheckInterval = null;
+            }
+            
+            // Show error and allow retry
+            showError('Payment failed. Please try again or use a different payment method.');
+            
+            // Reset to step 1
+            resetToPhoneForm();
+        }
+        
+        // Cancel payment
+        function cancelPayment() {
+            // Clear interval
+            if (statusCheckInterval) {
+                clearInterval(statusCheckInterval);
+                statusCheckInterval = null;
+            }
+            
+            // Reset to phone form
+            resetToPhoneForm();
+            
+            // Show message
+            showError('Payment cancelled. You can try again anytime.');
+        }
+        
+        // Reset to phone form
+        function resetToPhoneForm() {
+            // Reset progress
+            updateProgress(1);
+            
+            // Show phone form
+            document.getElementById('paymentPending').style.display = 'none';
+            document.getElementById('phoneForm').style.display = 'block';
+            
+            // Reset button state
+            const button = document.getElementById('initiatePaymentBtn');
+            button.innerHTML = '<i class="fas fa-mobile-alt me-2"></i>Pay Ksh 79 via M-Pesa';
+            button.disabled = false;
+            
+            // Clear checkout request ID
+            currentCheckoutRequestId = null;
+        }
+        
+        // Update progress steps
+        function updateProgress(step) {
+            // Reset all steps
+            document.getElementById('step1').className = 'progress-step';
+            document.getElementById('step2').className = 'progress-step';
+            document.getElementById('step3').className = 'progress-step';
+            document.getElementById('line1').className = 'progress-line';
+            document.getElementById('line2').className = 'progress-line';
+            
+            if (step >= 1) {
+                document.getElementById('step1').className = 'progress-step completed';
+            }
+            
+            if (step >= 2) {
+                document.getElementById('step2').className = 'progress-step active';
+                document.getElementById('line1').className = 'progress-line completed';
+            }
+            
+            if (step >= 3) {
+                document.getElementById('step2').className = 'progress-step completed';
+                document.getElementById('step3').className = 'progress-step completed';
+                document.getElementById('line2').className = 'progress-line completed';
+            }
+        }
+        
+        // Show error message
+        function showError(message) {
+            const errorElement = document.getElementById('errorMessage');
+            const errorText = document.getElementById('errorText');
+            
+            errorText.textContent = message;
+            errorElement.classList.remove('d-none');
+            errorElement.classList.add('animate__animated', 'animate__shakeX');
+            
+            // Auto-hide after 10 seconds
+            setTimeout(() => {
+                hideError();
+            }, 10000);
+        }
+        
+        // Hide error message
+        function hideError() {
+            const errorElement = document.getElementById('errorMessage');
+            errorElement.classList.add('d-none');
+            errorElement.classList.remove('animate__animated', 'animate__shakeX');
+        }
     </script>
 </body>
 </html>

@@ -148,10 +148,33 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         return f"User {self.phone_number[-4:]}"
     
     def activate_premium(self):
-        """Activate premium membership"""
-        self.is_premium = True
-        self.premium_activated_date = timezone.now()
-        self.save()
+        """Activate premium membership and add Ksh 500 bonus"""
+        from django.db import transaction
+        
+        with transaction.atomic():
+            self.is_premium = True
+            self.premium_activated_date = timezone.now()
+            
+            # Add Ksh 500 bonus to balance
+            bonus_amount = 500.00
+            self.balance += bonus_amount
+            self.save()
+            
+            # Create transaction record for premium activation bonus
+            Transaction.objects.create(
+                user=self,
+                amount=bonus_amount,
+                transaction_type='bonus',
+                description='Premium Activation Bonus'
+            )
+            
+            # Also create a transaction for the premium activation itself
+            Transaction.objects.create(
+                user=self,
+                amount=0.00,  # The payment is handled separately via M-Pesa
+                transaction_type='premium',
+                description='Premium Membership Activation'
+            )
     
     def add_earning(self, amount, description="Survey completion"):
         """Add earnings to user balance"""
@@ -201,6 +224,71 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
             transaction_type='bonus',
             description='Referral Bonus'
         )
+
+class MpesaTransaction(models.Model):
+    """Model to track M-Pesa payments for premium activation"""
+    STATUS_CHOICES = [
+        ('PENDING', 'Pending'),
+        ('COMPLETED', 'Completed'),
+        ('FAILED', 'Failed'),
+        ('CANCELLED', 'Cancelled'),
+    ]
+    
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='mpesa_transactions')
+    phone_number = models.CharField(max_length=15)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    checkout_request_id = models.CharField(max_length=100, unique=True)
+    merchant_request_id = models.CharField(max_length=100)
+    mpesa_receipt = models.CharField(max_length=50, blank=True, null=True)
+    account_reference = models.CharField(max_length=100)
+    transaction_desc = models.CharField(max_length=200)
+    result_code = models.IntegerField(null=True, blank=True)
+    result_desc = models.TextField(blank=True, null=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='PENDING')
+    transaction_date = models.CharField(max_length=50, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        verbose_name = 'M-Pesa Transaction'
+        verbose_name_plural = 'M-Pesa Transactions'
+        ordering = ['-created_at']
+    
+    def __str__(self):
+        return f"{self.user.phone_number} - Ksh {self.amount} - {self.status}"
+    
+    def mark_as_completed(self, mpesa_receipt=None, result_code=0, result_desc="Success"):
+        """Mark transaction as completed and activate premium"""
+        from django.db import transaction
+        
+        with transaction.atomic():
+            self.status = 'COMPLETED'
+            self.result_code = result_code
+            self.result_desc = result_desc
+            
+            if mpesa_receipt:
+                self.mpesa_receipt = mpesa_receipt
+            
+            self.save()
+            
+            # Activate premium for user if not already active
+            if not self.user.is_premium:
+                self.user.activate_premium()
+            
+            # Create a payment transaction record
+            Transaction.objects.create(
+                user=self.user,
+                amount=self.amount,
+                transaction_type='premium',
+                description=f'Premium Activation Payment - M-Pesa Receipt: {mpesa_receipt or "N/A"}'
+            )
+    
+    def mark_as_failed(self, result_code, result_desc):
+        """Mark transaction as failed"""
+        self.status = 'FAILED'
+        self.result_code = result_code
+        self.result_desc = result_desc
+        self.save()
 
 class Survey(models.Model):
     SURVEY_CATEGORIES = [
